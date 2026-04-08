@@ -53,15 +53,15 @@ export function Footer() {
             <h4 className="text-foreground font-semibold mb-4">Contact</h4>
             <ul className="space-y-3">
               <li>
-                <a href="tel:+19105551234" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-sm">
+                <a href="tel:+19108339771" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-sm">
                   <Phone className="h-4 w-4" />
-                  (910) 555-1234
+                  (910) 833-9771
                 </a>
               </li>
               <li>
-                <a href="mailto:info@valortowing.com" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-sm">
+                <a href="mailto:contact@valortowing.net" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-sm">
                   <Mail className="h-4 w-4" />
-                  info@valortowing.com
+                  contact@valortowing.net
                 </a>
               </li>
             </ul>
