@@ -72,7 +72,7 @@ export function ServicesSection() {
           <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold">
             <a href="tel:+19105551234">
               <Phone className="h-5 w-5 mr-2" />
-              Call Now: (910) 555-1234
+              Call Now: (910) 833-9771
             </a>
           </Button>
         </div>
