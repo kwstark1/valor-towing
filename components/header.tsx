@@ -38,12 +38,12 @@ export function Header() {
 
           {/* Phone & CTA */}
           <div className="flex items-center gap-3">
-            <a href="tel:+19105551234" className="hidden sm:flex items-center gap-2 text-foreground font-semibold">
+            <a href="tel:+19108339771" className="hidden sm:flex items-center gap-2 text-foreground font-semibold">
               <Phone className="h-4 w-4 text-primary" />
-              <span>(910) 555-1234</span>
+              <span>(910) 833-9771</span>
             </a>
             <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold">
-              <a href="tel:+19105551234">
+              <a href="tel:+19108339771">
                 <Phone className="h-4 w-4 mr-2" />
                 <span className="hidden sm:inline">Call Now</span>
                 <span className="sm:hidden">Call</span>
@@ -86,9 +86,9 @@ export function Header() {
               >
                 Contact
               </Link>
-              <a href="tel:+19105551234" className="flex items-center gap-2 text-primary font-semibold sm:hidden">
+              <a href="tel:+19108339771" className="flex items-center gap-2 text-primary font-semibold sm:hidden">
                 <Phone className="h-4 w-4" />
-                <span>(910) 555-1234</span>
+                <span>(910) 833-9771</span>
               </a>
             </div>
           </nav>
