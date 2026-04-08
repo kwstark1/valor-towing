@@ -40,9 +40,9 @@ export function HeroSection() {
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
             <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold text-lg px-8 py-6 w-full sm:w-auto">
-              <a href="tel:+19105551234">
+              <a href="tel:+19108339771">
                 <Phone className="h-5 w-5 mr-2" />
-                Call Now: (910) 555-1234
+                Call Now: (910) 833-9771
               </a>
             </Button>
             <Button asChild variant="outline" size="lg" className="border-border text-foreground hover:bg-secondary font-semibold text-lg px-8 py-6 w-full sm:w-auto">
