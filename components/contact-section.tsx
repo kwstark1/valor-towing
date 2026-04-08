@@ -49,8 +49,8 @@ export function ContactSection() {
                   </div>
                   <div>
                     <p className="font-semibold text-foreground">24/7 Emergency Line</p>
-                    <a href="tel:+19105551234" className="text-primary hover:underline text-lg font-medium">
-                      (910) 555-1234
+                    <a href="tel:+19108339771" className="text-primary hover:underline text-lg font-medium">
+                      (910) 833-9771
                     </a>
                   </div>
                 </div>
@@ -61,8 +61,8 @@ export function ContactSection() {
                   </div>
                   <div>
                     <p className="font-semibold text-foreground">Email Us</p>
-                    <a href="mailto:info@valortowing.com" className="text-muted-foreground hover:text-primary transition-colors">
-                      info@valortowing.com
+                    <a href="mailto:contact@valortowing.net" className="text-muted-foreground hover:text-primary transition-colors">
+                      contact@valortowing.net
                     </a>
                   </div>
                 </div>
@@ -79,6 +79,17 @@ export function ContactSection() {
                   </div>
                 </div>
 
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                    <MapPin className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-foreground">Our Location</p>
+                    <p className="text-muted-foreground">
+                      9897 Blackwell Rd SE, Leland, NC 28451
+                    </p>
+                  </div>
+                </div>
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
                     <Clock className="h-6 w-6 text-primary" />
@@ -101,7 +112,7 @@ export function ContactSection() {
                 For emergency towing or roadside assistance, skip the form and call us directly.
               </p>
               <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold w-full">
-                <a href="tel:+19105551234">
+                <a href="tel:+19108339771">
                   <Phone className="h-4 w-4 mr-2" />
                   Call Now
                 </a>
@@ -172,7 +183,7 @@ export function ContactSection() {
                         id="phone"
                         name="phone"
                         type="tel"
-                        placeholder="(910) 555-1234"
+                        placeholder="(910) 833-9771"
                         className="bg-input border-border text-foreground placeholder:text-muted-foreground"
                       />
                     </Field>h
