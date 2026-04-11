@@ -28,8 +28,11 @@ export function Header() {
             <Link href="#services" className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium">
               Services
             </Link>
-            <Link href="#crew" className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium">
+            <Link href="/crew" className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium">
               Our Crew
+            </Link>
+            <Link href="/gallery" className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium">
+              Gallery
             </Link>
             <Link href="#contact" className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium">
               Contact
@@ -72,14 +75,21 @@ export function Header() {
               >
                 Services
               </Link>
-              <Link 
-                href="#crew" 
+              <Link
+                href="/crew"
                 className="text-foreground hover:text-primary transition-colors font-medium"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Our Crew
               </Link>
-              <Link 
+              <Link
+                href="/gallery"
+                className="text-foreground hover:text-primary transition-colors font-medium"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Gallery
+              </Link>
+              <Link
                 href="#contact" 
                 className="text-foreground hover:text-primary transition-colors font-medium"
                 onClick={() => setMobileMenuOpen(false)}
