@@ -29,7 +29,11 @@ export function HeroSection() {
         <div
           key={slide.src}
           className="absolute inset-0 bg-cover bg-center transition-opacity duration-1000"
-          style={{ backgroundImage: `url(${slide.src})`, opacity: i === current ? 1 : 0, zIndex: i === current ? 1 : 0 }}
+          style={{
+            backgroundImage: `url(${slide.src})`,
+            opacity: i === current ? 1 : 0,
+            zIndex: i === current ? 1 : 0,
+          }}
           aria-hidden="true"
         />
       ))}
@@ -40,15 +44,17 @@ export function HeroSection() {
           <span className="text-white text-sm font-medium">24/7 Emergency Response</span>
         </div>
         <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold text-white mb-6 leading-tight">
-          Stranded in <span className="text-blue-400">Brunswick County?</span>
+          Stranded in{" "}
+          <span className="text-blue-400">Brunswick County?</span>
           <br />
-          <span className="text-red-500">We're On Our Way.</span>
+          <span className="text-red-500">We&apos;re On Our Way.</span>
         </h1>
         <p className="text-xl text-white/80 mb-4 max-w-2xl mx-auto leading-relaxed">
-          Fast, reliable towing services across the Cape Fear region. When you're stranded, we respond with the urgency and discipline of those who served.
+          Fast, reliable towing services across the Cape Fear region. When
+          you&apos;re stranded, we respond with the urgency and discipline of those who served.
         </p>
         <p className="text-white/60 text-sm mb-10 flex items-center justify-center gap-2">
-          <span>📍</span> Proudly Serving Brunswick, New Hanover & Pender Counties
+          <span>📍</span> Proudly Serving Brunswick, New Hanover &amp; Pender Counties
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button asChild size="lg" className="bg-red-600 hover:bg-red-700 text-white font-bold text-lg px-8 py-6 rounded-xl shadow-lg">
@@ -63,7 +69,11 @@ export function HeroSection() {
         </div>
         <div className="flex justify-center gap-2 mt-12">
           {slides.map((_, i) => (
-            <button key={i} onClick={() => setCurrent(i)} className={`w-2 h-2 rounded-full transition-all duration-300 ${i === current ? "bg-white w-6" : "bg-white/40"}`} />
+            <button
+              key={i}
+              onClick={() => setCurrent(i)}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${i === current ? "bg-white w-6" : "bg-white/40"}`}
+            />
           ))}
         </div>
       </div>
