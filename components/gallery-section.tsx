@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import { useState } from "react"
 import { X, ChevronLeft, ChevronRight } from "lucide-react"
@@ -6,7 +6,7 @@ import { X, ChevronLeft, ChevronRight } from "lucide-react"
 const photos = [
   { src: "/images/IMG_4586.jpeg", alt: "Valor flatbed towing a Ford Bronco", caption: "Flatbed Transport" },
   { src: "/images/IMG_4587.jpg", alt: "Valor flatbed with Ford Bronco", caption: "Flatbed Transport" },
-  { src: “/images/IMG_4599.jpeg”, alt: “Valor heavy equipment transport — JLG 1850SJ boom lift”, caption: “Heavy Equipment Transport” },
+  { src: "/images/IMG_4599.jpeg", alt: "Valor heavy equipment transport - JLG 1850SJ boom lift", caption: "Heavy Equipment Transport" },
   { src: "/images/IMG_4585.jpeg", alt: "Valor towing a Leland Police vehicle", caption: "Municipal & Fleet Services" },
   { src: "/images/IMG_4632.JPG", alt: "Valor flatbed on construction job site", caption: "Job Site Transport" },
   { src: "/images/IMG_4634.JPG", alt: "Valor flatbed transporting a boat at sunset", caption: "Boat & Watercraft Transport" },
@@ -31,7 +31,7 @@ export function GallerySection() {
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-6">Our Work</h2>
           <p className="text-muted-foreground text-lg leading-relaxed">
-            From flatbed towing to heavy equipment and boat transport — see Valor's fleet in action across Brunswick County and beyond.
+            From flatbed towing to heavy equipment and boat transport - see Valor&apos;s fleet in action across Brunswick County and beyond.
           </p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -56,7 +56,7 @@ export function GallerySection() {
           <button onClick={(e) => { e.stopPropagation(); prev(); }} className="absolute left-4 text-white/70 hover:text-white z-10"><ChevronLeft className="h-10 w-10" /></button>
           <div onClick={(e) => e.stopPropagation()} className="max-w-5xl max-h-[85vh] w-full">
             <img src={photos[lightbox].src} alt={photos[lightbox].alt} className="w-full h-full object-contain rounded-lg" />
-            <p className=”text-white/70 text-center mt-3 text-sm”>{photos[lightbox].caption} — {lightbox + 1} / {photos.length}</p>
+            <p className="text-white/70 text-center mt-3 text-sm">{photos[lightbox].caption} - {lightbox + 1} / {photos.length}</p>
           </div>
           <button onClick={(e) => { e.stopPropagation(); next(); }} className="absolute right-4 text-white/70 hover:text-white z-10"><ChevronRight className="h-10 w-10" /></button>
         </div>
