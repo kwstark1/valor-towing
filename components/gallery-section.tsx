@@ -1,4 +1,4 @@
-﻿tsx"use client"
+﻿"use client"
 
 import { useState } from "react"
 import { X, ChevronLeft, ChevronRight } from "lucide-react"
