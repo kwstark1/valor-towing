@@ -34,9 +34,6 @@ export function HeroSection() {
               Call Now: 910-833-9771
             </a>
           </Button>
-          <Button asChild size="lg" variant="outline" className="border-white/40 text-white hover:bg-white/10 font-semibold text-lg px-8 py-6 rounded-xl backdrop-blur-sm">
-            <a href="#services">View Our Services</a>
-          </Button>
         </div>
       </div>
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 animate-bounce">
