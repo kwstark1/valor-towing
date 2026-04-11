@@ -1,4 +1,4 @@
-tsx"use client"
+﻿"use client"
 
 import { useState, useEffect } from "react"
 import { Phone, ChevronDown } from "lucide-react"
@@ -47,14 +47,14 @@ export function HeroSection() {
           Stranded in{" "}
           <span className="text-blue-400">Brunswick County?</span>
           <br />
-          <span className="text-red-500">We&apos;re On Our Way.</span>
+          <span className="text-red-500">{"We're On Our Way."}</span>
         </h1>
         <p className="text-xl text-white/80 mb-4 max-w-2xl mx-auto leading-relaxed">
           Fast, reliable towing services across the Cape Fear region. When
-          you&apos;re stranded, we respond with the urgency and discipline of those who served.
+          {"you're"} stranded, we respond with the urgency and discipline of those who served.
         </p>
         <p className="text-white/60 text-sm mb-10 flex items-center justify-center gap-2">
-          <span>📍</span> Proudly Serving Brunswick, New Hanover &amp; Pender Counties
+          <span>📍</span> Proudly Serving Brunswick, New Hanover {"&"} Pender Counties
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button asChild size="lg" className="bg-red-600 hover:bg-red-700 text-white font-bold text-lg px-8 py-6 rounded-xl shadow-lg">
