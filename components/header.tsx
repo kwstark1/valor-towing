@@ -37,6 +37,9 @@ export function Header() {
             <Link href="/gallery" className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium">
               Gallery
             </Link>
+            <Link href="/community" className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium">
+              Community
+            </Link>
             <Link href="#contact" className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium">
               Contact
             </Link>
@@ -100,7 +103,14 @@ export function Header() {
                 Gallery
               </Link>
               <Link
-                href="#contact" 
+                href="/community"
+                className="text-foreground hover:text-primary transition-colors font-medium"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Community
+              </Link>
+              <Link
+                href="#contact"
                 className="text-foreground hover:text-primary transition-colors font-medium"
                 onClick={() => setMobileMenuOpen(false)}
               >
