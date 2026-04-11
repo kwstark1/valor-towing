@@ -74,7 +74,8 @@ export function ContactSection() {
                   <div>
                     <p className="font-semibold text-foreground">Service Area</p>
                     <p className="text-muted-foreground">
-                      Brunswick, New Hanover & Pender Counties
+                      Brunswick, New Hanover & Pender Counties<br />
+                      Shallotte, Wilmington, Rocky Point
                     </p>
                   </div>
                 </div>
@@ -186,7 +187,7 @@ export function ContactSection() {
                         placeholder="(910) 833-9771"
                         className="bg-input border-border text-foreground placeholder:text-muted-foreground"
                       />
-                    </Field>h
+                    </Field>
 
                     <Field>
                       <FieldLabel htmlFor="message">Message</FieldLabel>

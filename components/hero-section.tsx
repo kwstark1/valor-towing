@@ -18,10 +18,7 @@ export function HeroSection() {
           <span className="text-white text-sm font-medium">24/7 Emergency Response</span>
         </div>
         <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold text-white mb-6 leading-tight">
-          Stranded in{" "}
-          <span className="text-blue-400">Brunswick County?</span>
-          <br />
-          <span className="text-red-500">{"We're On Our Way."}</span>
+          Valor Towing <span className="text-blue-400">&</span> Transport
         </h1>
         <p className="text-xl text-white/80 mb-4 max-w-2xl mx-auto leading-relaxed">
           Fast, reliable towing services across the Cape Fear region. When

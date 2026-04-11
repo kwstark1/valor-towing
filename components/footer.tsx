@@ -73,10 +73,7 @@ export function Footer() {
           <p className="text-muted-foreground text-sm">
             &copy; {new Date().getFullYear()} Valor Towing & Transport. All rights reserved.
           </p>
-          <p className="text-muted-foreground text-sm flex items-center gap-1">
-            Veteran Owned & Operated
-            <span className="text-accent ml-1">with Pride</span>
-          </p>
+          <p className="text-muted-foreground text-sm">Veteran Owned &amp; Operated</p>
         </div>
       </div>
     </footer>

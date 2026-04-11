@@ -29,7 +29,7 @@ export function GallerySection() {
     <section id="gallery" className="py-20 md:py-32 bg-background">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-6">Our Work</h2>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-6">Gallery</h2>
           <p className="text-muted-foreground text-lg leading-relaxed">
             From flatbed towing to heavy equipment and boat transport - see Valor&apos;s fleet in action across Brunswick County and beyond.
           </p>
