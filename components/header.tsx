@@ -30,7 +30,7 @@ export function Header() {
             <Link href="/" className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium">
               Home
             </Link>
-            <Link href="#services" className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium">
+            <Link href="/#services" className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium">
               Services
             </Link>
             <Link href="/crew" className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium">
@@ -42,7 +42,7 @@ export function Header() {
             <Link href="/community" className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium">
               Community
             </Link>
-            <Link href="#contact" className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium">
+            <Link href="/#contact" className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium">
               Contact
             </Link>
           </nav>
@@ -84,7 +84,7 @@ export function Header() {
                 Home
               </Link>
               <Link
-                href="#services"
+                href="/#services"
                 className="text-foreground hover:text-primary transition-colors font-medium"
                 onClick={() => setMobileMenuOpen(false)}
               >
@@ -112,7 +112,7 @@ export function Header() {
                 Community
               </Link>
               <Link
-                href="#contact"
+                href="/#contact"
                 className="text-foreground hover:text-primary transition-colors font-medium"
                 onClick={() => setMobileMenuOpen(false)}
               >
