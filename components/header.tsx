@@ -11,13 +11,13 @@ export function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 md:h-20">
+        <div className="flex items-center justify-between h-20 md:h-28">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3">
             <img
               src="/images/valor-logo.png"
               alt="Valor Towing & Transport"
-              className="w-10 h-10 md:w-12 md:h-12 object-contain"
+              className="w-16 h-16 md:w-24 md:h-24 object-contain"
             />
             <div className="flex flex-col">
               <span className="text-foreground font-bold text-lg md:text-xl tracking-tight">Valor Towing</span>

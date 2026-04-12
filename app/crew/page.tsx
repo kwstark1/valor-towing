@@ -6,7 +6,7 @@ export default function CrewPage() {
   return (
     <main className="min-h-screen">
       <Header />
-      <div className="pt-16 md:pt-20">
+      <div className="pt-20 md:pt-28">
         <CrewSection />
       </div>
       <Footer />
