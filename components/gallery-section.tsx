@@ -4,7 +4,6 @@ import { useState } from "react"
 import { X, ChevronLeft, ChevronRight } from "lucide-react"
 
 const photos = [
-  { src: "/images/IMG_4586.jpeg", alt: "Valor flatbed towing a Ford Bronco", caption: "Flatbed Transport" },
   { src: "/images/IMG_4587.jpg", alt: "Valor flatbed with Ford Bronco", caption: "Flatbed Transport" },
   { src: "/images/IMG_4599.jpeg", alt: "Valor heavy equipment transport - JLG 1850SJ boom lift", caption: "Heavy Equipment Transport" },
   { src: "/images/IMG_4585.jpeg", alt: "Valor towing a Leland Police vehicle", caption: "Municipal & Fleet Services" },
