@@ -11,27 +11,38 @@ export function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 md:h-20">
+        <div className="flex items-center justify-between h-20 md:h-28">
           {/* Logo */}
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 md:w-12 md:h-12 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-lg md:text-xl">V</span>
-            </div>
+          <Link href="/" className="flex items-center gap-3">
+            <img
+              src="/images/valor-logo.png"
+              alt="Valor Towing & Transport"
+              className="w-16 h-16 md:w-24 md:h-24 object-contain"
+            />
             <div className="flex flex-col">
               <span className="text-foreground font-bold text-lg md:text-xl tracking-tight">Valor Towing</span>
               <span className="text-muted-foreground text-xs hidden sm:block">Veteran Owned & Operated</span>
             </div>
-          </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
-            <Link href="#services" className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium">
+            <Link href="/" className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium">
+              Home
+            </Link>
+            <Link href="/#services" className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium">
               Services
             </Link>
-            <Link href="#crew" className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium">
+            <Link href="/crew" className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium">
               Our Crew
             </Link>
-            <Link href="#contact" className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium">
+            <Link href="/gallery" className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium">
+              Gallery
+            </Link>
+            <Link href="/community" className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium">
+              Community
+            </Link>
+            <Link href="/#contact" className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium">
               Contact
             </Link>
           </nav>
@@ -65,22 +76,43 @@ export function Header() {
         {mobileMenuOpen && (
           <nav className="md:hidden py-4 border-t border-border">
             <div className="flex flex-col gap-4">
-              <Link 
-                href="#services" 
+              <Link
+                href="/"
+                className="text-foreground hover:text-primary transition-colors font-medium"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Home
+              </Link>
+              <Link
+                href="/#services"
                 className="text-foreground hover:text-primary transition-colors font-medium"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Services
               </Link>
-              <Link 
-                href="#crew" 
+              <Link
+                href="/crew"
                 className="text-foreground hover:text-primary transition-colors font-medium"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Our Crew
               </Link>
-              <Link 
-                href="#contact" 
+              <Link
+                href="/gallery"
+                className="text-foreground hover:text-primary transition-colors font-medium"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Gallery
+              </Link>
+              <Link
+                href="/community"
+                className="text-foreground hover:text-primary transition-colors font-medium"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Community
+              </Link>
+              <Link
+                href="/#contact"
                 className="text-foreground hover:text-primary transition-colors font-medium"
                 onClick={() => setMobileMenuOpen(false)}
               >
