@@ -4,23 +4,25 @@ import { User } from "lucide-react"
 
 const crewMembers = [
   {
-    name: "Mike Johnson",
-    title: "Owner & Lead Operator",
-    veteran: "U.S. Army Veteran",
-    bio: "15+ years in the towing industry. Brings military discipline and leadership to every operation."
-  },
-  {
-    name: "Sarah Martinez",
-    title: "Operations Manager",
-    veteran: "U.S. Navy Veteran",
-    bio: "Expert dispatcher ensuring fast response times. Coordinates all logistics with precision."
-  },
-  {
-    name: "James Wilson",
-    title: "Heavy Equipment Specialist",
+    name: "Allen Ellixson",
+    title: "Owner / Operator",
     veteran: "U.S. Marine Corps Veteran",
-    bio: "Certified heavy equipment operator. Specializes in complex recovery operations."
-  }
+  },
+  {
+    name: "Justin France",
+    title: "Owner / Operator",
+    veteran: "U.S. Marine Corps Veteran",
+  },
+  {
+    name: "Ken Stark",
+    title: "Operator",
+    veteran: "U.S. Navy Veteran",
+  },
+  {
+    name: "William Chambers",
+    title: "Operator",
+    veteran: null,
+  },
 ]
 
 export function CrewSection() {
@@ -39,7 +41,7 @@ export function CrewSection() {
         </div>
 
         {/* Crew Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {crewMembers.map((member) => (
             <Card key={member.name} className="bg-card border-border hover:border-primary/50 transition-colors overflow-hidden group">
               {/* Photo Placeholder */}
@@ -50,9 +52,11 @@ export function CrewSection() {
                 <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 transition-colors" />
               </div>
               <CardContent className="p-6">
-                <Badge variant="outline" className="mb-3 border-accent/50 text-accent">
-                  {member.veteran}
-                </Badge>
+                {member.veteran && (
+                  <Badge variant="outline" className="mb-3 border-accent/50 text-accent">
+                    {member.veteran}
+                  </Badge>
+                )}
                 <h3 className="text-xl font-bold text-card-foreground mb-1">{member.name}</h3>
                 <p className="text-primary font-medium text-sm">{member.title}</p>
               </CardContent>
