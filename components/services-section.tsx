@@ -12,7 +12,7 @@ const services = [
   {
     icon: Wrench,
     title: "Roadside Assistance",
-    description: "Don&apos;t let a dead battery, flat tire, or empty tank ruin your day. Our skilled technicians arrive equipped to get you back on the road quickly.",
+    description: "Don't let a dead battery, flat tire, or empty tank ruin your day. Our skilled technicians arrive equipped to get you back on the road quickly.",
     features: ["Jump Starts", "Tire Changes", "Fuel Delivery", "Lockout Service"]
   },
   {

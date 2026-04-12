@@ -21,8 +21,7 @@ export function HeroSection() {
           Valor Towing <span className="text-blue-400">&</span> Transport
         </h1>
         <p className="text-xl text-white/80 mb-4 max-w-2xl mx-auto leading-relaxed">
-          Fast, reliable towing services across the Cape Fear region. When
-          {"you're"} stranded, we respond with the urgency and discipline of those who served.
+          Fast, reliable towing services across the Cape Fear region. When you&apos;re stranded, we respond with the urgency and discipline of those who served.
         </p>
         <p className="text-white/60 text-sm mb-10 flex items-center justify-center gap-2">
           <span>📍</span> Proudly Serving Brunswick, New Hanover {"&"} Pender Counties

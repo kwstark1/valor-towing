@@ -14,9 +14,11 @@ export function Header() {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 md:w-12 md:h-12 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-lg md:text-xl">V</span>
-            </div>
+            <img
+              src="/images/valor-logo.png"
+              alt="Valor Towing & Transport"
+              className="w-10 h-10 md:w-12 md:h-12 object-contain"
+            />
             <div className="flex flex-col">
               <span className="text-foreground font-bold text-lg md:text-xl tracking-tight">Valor Towing</span>
               <span className="text-muted-foreground text-xs hidden sm:block">Veteran Owned & Operated</span>
