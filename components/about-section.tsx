@@ -22,8 +22,9 @@ export function AboutSection() {
             itself when it was still the end of the railroad line. In 1920,
             the two lines married. Their son lived to see the entire 20th
             century, and began the family&rsquo;s long work in oil and gas
-            pipelines — from Alaska to West Texas. Three generations have
-            carried <span className="italic">Barker</span> as a middle name.
+            pipelines — from Alaska to West Texas. The{" "}
+            <span className="italic">Barker</span> name has been carried
+            through the Stark family for generations.
           </p>
 
           <p>
