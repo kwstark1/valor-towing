@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     template: '%s — Stark & Barker',
   },
   description:
-    'AI-powered marketing infrastructure for founders and operators who have outgrown agency retainers and aren’t ready to hire a CMO.',
+    'Modern marketing infrastructure for founders and operators who have outgrown agency retainers and aren’t ready to hire a CMO.',
   generator: 'v0.app',
 }
 

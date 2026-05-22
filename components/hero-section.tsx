@@ -10,7 +10,7 @@ export function HeroSection() {
       </h1>
 
       <p className="mt-8 sm:mt-10 max-w-2xl text-lg sm:text-xl leading-[1.55] text-muted-foreground">
-        We install AI-powered marketing infrastructure for founders and
+        We install modern marketing infrastructure for founders and
         operators who&rsquo;ve outgrown agency retainers and aren&rsquo;t ready
         to hire a CMO.
       </p>

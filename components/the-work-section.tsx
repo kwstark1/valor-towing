@@ -9,7 +9,7 @@ const services = [
   {
     number: "02",
     name: "Production",
-    body: "Content at the speed of attention. AI-powered workflows for writing, editing, distributing, and atomizing across the channels your buyers actually use. A lean team produces what used to require a department.",
+    body: "Content at the speed of attention. Modern workflows for writing, editing, distributing, and atomizing across the channels your buyers actually use. A lean team produces what used to require a department.",
   },
   {
     number: "03",
@@ -24,7 +24,7 @@ export function TheWorkSection() {
       <RuleLabel>The Work</RuleLabel>
 
       <p className="mt-14 sm:mt-20 font-display text-2xl sm:text-3xl leading-snug tracking-tight text-foreground">
-        AI does the leverage.{" "}
+        Systems do the leverage.{" "}
         <span className="text-muted-foreground">We do the judgment.</span>
       </p>
 

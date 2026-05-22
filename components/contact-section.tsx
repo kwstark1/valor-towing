@@ -24,7 +24,7 @@ export function ContactSection() {
         <span className="italic">The Stark &amp; Barker Memo</span>
         <span className="text-muted-foreground">
           {" "}— a weekly intelligence brief on the frameworks, quiet edges,
-          and AI plays serious operators use to compound revenue. Coming Soon.
+          and plays serious operators use to compound revenue. Coming Soon.
         </span>
       </p>
 

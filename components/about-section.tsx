@@ -28,8 +28,8 @@ export function AboutSection() {
           </p>
 
           <p>
-            Now we build pipelines of a different sort, too — they run on AI
-            and carry attention instead of oil.{" "}
+            Now we build pipelines of a different sort, too — they carry
+            attention instead of oil.{" "}
             <span className="text-foreground">
               The work compounds the same way it always did.
             </span>
