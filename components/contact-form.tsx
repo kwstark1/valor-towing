@@ -52,7 +52,11 @@ export function ContactForm() {
       }
       reset()
       setStatus("success")
-      sendGAEvent("event", "generate_lead", { method: "contact_form" })
+      try {
+        sendGAEvent("event", "generate_lead", { method: "contact_form" })
+      } catch {
+        // GA failure must not clobber the success state
+      }
     } catch {
       setServerError("Something went wrong. Please try again.")
       setStatus("error")
