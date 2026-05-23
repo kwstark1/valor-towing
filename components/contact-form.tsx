@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
+import { sendGAEvent } from "@next/third-parties/google"
 
 const schema = z.object({
   name: z.string().trim().min(1, "Required"),
@@ -51,6 +52,7 @@ export function ContactForm() {
       }
       reset()
       setStatus("success")
+      sendGAEvent("event", "generate_lead", { method: "contact_form" })
     } catch {
       setServerError("Something went wrong. Please try again.")
       setStatus("error")
