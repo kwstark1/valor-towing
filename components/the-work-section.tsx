@@ -4,7 +4,7 @@ const services = [
   {
     number: "01",
     name: "Measurement",
-    body: "Before we touch a campaign, we install the tracking and dashboards that end the “is marketing working?” debate. Attribution, pipeline reporting, customer-acquisition cost by channel. The truth, in writing, every Monday.",
+    body: "You see which channels bring revenue and where the pipeline is actually building. Attribution, CAC by channel, pipeline value — in writing every Monday, so next week’s bets aren’t guesses.",
   },
   {
     number: "02",

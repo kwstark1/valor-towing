@@ -54,8 +54,8 @@ export function AboutSection() {
 
         <div className="mt-12 space-y-5 text-xl sm:text-2xl leading-[1.55] tracking-tight text-foreground">
           <p>
-            We tell you what's actually true about your business. Then we
-            build the pipelines that make sure your market hears it.
+            You see what&rsquo;s actually working — in numbers, not narratives.
+            Then we build the pipelines that make sure your market hears it.
           </p>
           <p className="text-muted-foreground italic">
             That's the firm in a sentence.

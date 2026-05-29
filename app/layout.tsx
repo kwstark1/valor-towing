@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     template: '%s — Stark & Barker',
   },
   description:
-    'Modern marketing infrastructure for founders and operators who have outgrown agency retainers and aren’t ready to hire a CMO.',
+    'We build and run the client pipelines that bring operators selling serious work a steady flow of qualified conversations — month over month, compounding.',
   generator: 'v0.app',
 }
 
