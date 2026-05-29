@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     template: '%s — Stark & Barker',
   },
   description:
-    'We build and run the client pipelines that bring operators selling serious work a steady flow of qualified conversations — month over month, compounding.',
+    'The client pipeline that compounds — qualified conversations every month, built and run for operators selling serious work.',
   generator: 'v0.app',
 }
 

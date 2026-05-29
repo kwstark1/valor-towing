@@ -41,14 +41,13 @@ export function AboutSection() {
         <div className="mt-12 space-y-7 text-lg sm:text-xl leading-[1.7] text-foreground/85">
           <p>
             <em className="italic text-foreground">Stark</em>{" "}— for the
-            unvarnished truth. The hard look at what's working in a business
-            and what isn't. The willingness to say what most agencies won't.
+            unvarnished truth. Reports that don't soften the numbers, even
+            when the misses are ours to fix.
           </p>
           <p>
             <em className="italic text-foreground">Barker</em>{" "}— for the
-            voice that carries the truth to the people who need to hear it.
-            Marketing only matters when customers hear it. The job is to make
-            sure they do.
+            voice that carries the truth to your customers. Marketing only
+            matters when it lands. The job is to make sure it does.
           </p>
         </div>
 

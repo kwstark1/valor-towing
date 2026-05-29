@@ -4,7 +4,7 @@ const services = [
   {
     number: "01",
     name: "Measurement",
-    body: "You see which channels bring revenue and where the pipeline is actually building. Attribution, CAC by channel, pipeline value — in writing every Monday, so next week’s bets aren’t guesses.",
+    body: "You see which channels bring revenue and which are bringing real conversations. Attribution, CAC by channel, open deal value — in writing every Monday, so next week’s bets aren’t guesses.",
   },
   {
     number: "02",

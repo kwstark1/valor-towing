@@ -10,9 +10,8 @@ export function HeroSection() {
       </h1>
 
       <p className="mt-8 sm:mt-10 max-w-2xl text-lg sm:text-xl leading-[1.55] text-muted-foreground">
-        We build and run the client pipelines that bring operators selling
-        serious work a steady flow of qualified conversations — month over
-        month, compounding.
+        The client pipeline that compounds — qualified conversations every
+        month, built and run for operators selling serious work.
       </p>
 
       <div className="mt-10 sm:mt-12">
