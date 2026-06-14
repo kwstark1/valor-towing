@@ -99,16 +99,24 @@ export async function POST(request: Request) {
     })
 
     if (result.error) {
+      console.error("Resend error (major-gs order):", result.error)
       return NextResponse.json(
-        { error: "Failed to send. Please try again." },
+        {
+          error: "Failed to send. Please try again.",
+          detail: result.error?.message || String(result.error),
+        },
         { status: 502 }
       )
     }
 
     return NextResponse.json({ ok: true })
-  } catch {
+  } catch (err) {
+    console.error("Resend threw (major-gs order):", err)
     return NextResponse.json(
-      { error: "Failed to send. Please try again." },
+      {
+        error: "Failed to send. Please try again.",
+        detail: err instanceof Error ? err.message : String(err),
+      },
       { status: 502 }
     )
   }
