@@ -99,12 +99,10 @@ export async function POST(request: Request) {
     })
 
     if (result.error) {
+      // Logged server-side (visible in Vercel logs); not exposed to the client.
       console.error("Resend error (major-gs order):", result.error)
       return NextResponse.json(
-        {
-          error: "Failed to send. Please try again.",
-          detail: result.error?.message || String(result.error),
-        },
+        { error: "Failed to send. Please try again." },
         { status: 502 }
       )
     }
@@ -113,10 +111,7 @@ export async function POST(request: Request) {
   } catch (err) {
     console.error("Resend threw (major-gs order):", err)
     return NextResponse.json(
-      {
-        error: "Failed to send. Please try again.",
-        detail: err instanceof Error ? err.message : String(err),
-      },
+      { error: "Failed to send. Please try again." },
       { status: 502 }
     )
   }
