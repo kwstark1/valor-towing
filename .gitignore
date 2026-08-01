@@ -23,6 +23,7 @@ build/
 
 # claude code — per-developer local state
 .claude/settings.local.json
+.claude/launch.json
 
 # typescript
 *.tsbuildinfo

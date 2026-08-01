@@ -1,7 +1,9 @@
 import { Header } from "@/components/header"
 import { HeroSection } from "@/components/hero-section"
-import { TheWorkSection } from "@/components/the-work-section"
-import { ContactSection } from "@/components/contact-section"
+import { StorySection } from "@/components/story-section"
+import { OfferSection } from "@/components/offer-section"
+import { CloseSection } from "@/components/close-section"
+import { AuditForm } from "@/components/audit-form"
 import { Footer } from "@/components/footer"
 
 export default function HomePage() {
@@ -9,8 +11,10 @@ export default function HomePage() {
     <main className="min-h-screen">
       <Header />
       <HeroSection />
-      <TheWorkSection />
-      <ContactSection />
+      <StorySection />
+      <OfferSection />
+      <CloseSection />
+      <AuditForm />
       <Footer />
     </main>
   )
