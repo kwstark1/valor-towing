@@ -1,5 +1,3 @@
-import Link from "next/link"
-
 export function HeroSection() {
   return (
     <section className="mx-auto max-w-4xl px-6 pt-20 pb-24 sm:px-8 sm:pt-28 sm:pb-32">
@@ -38,12 +36,12 @@ export function HeroSection() {
       </div>
 
       <div className="mt-12 sm:mt-14">
-        <Link
+        <a
           href="#audit-form"
           className="group inline-flex items-center justify-center rounded-sm bg-primary px-8 py-4 text-base font-bold uppercase tracking-[0.14em] text-primary-foreground transition-colors hover:bg-primary/90 sm:text-lg"
         >
           Find My Biggest Revenue Leak
-        </Link>
+        </a>
         <p className="mt-4 text-sm text-muted-foreground sm:text-base">
           See what is holding your growth back and what to fix first.
         </p>

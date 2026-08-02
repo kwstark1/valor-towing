@@ -1,5 +1,3 @@
-import Link from "next/link"
-
 /*
  * [CONFIRM: the six components below describe the Stark & Barker Growth System
  * in general terms. Swap in Ken's exact services here before publishing if he
@@ -138,12 +136,12 @@ export function OfferSection() {
       </p>
 
       <div className="mt-14 sm:mt-16">
-        <Link
+        <a
           href="#audit-form"
           className="group inline-flex items-center justify-center rounded-sm bg-primary px-8 py-4 text-base font-bold uppercase tracking-[0.14em] text-primary-foreground transition-colors hover:bg-primary/90 sm:text-lg"
         >
           Show Me What To Fix First
-        </Link>
+        </a>
         <p className="mt-4 text-sm text-muted-foreground sm:text-base">
           Take the first step toward marketing you can understand, improve,
           and trust.
