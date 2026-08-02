@@ -30,8 +30,8 @@ export function HeroSection() {
           system with a clear offer, a clear path, and clear next actions.
         </p>
         <p>
-          The next step is not more theory. It is finding the next revenue
-          leak and moving before you feel ready.
+          The next step is not more theory. It is finding where your revenue
+          is leaking, and fixing the one that matters most.
         </p>
       </div>
 

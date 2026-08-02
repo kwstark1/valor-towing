@@ -16,7 +16,7 @@ export function CloseSection() {
           that gives your effort somewhere to go.
         </p>
         <p className="text-lg font-medium text-foreground sm:text-2xl">
-          Move before you feel ready. Let the market teach you the rest.
+          Make the next clear move, and let the results teach you the rest.
         </p>
       </div>
     </section>

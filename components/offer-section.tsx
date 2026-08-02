@@ -116,10 +116,11 @@ export function OfferSection() {
       <Subheading>The cost of waiting</Subheading>
       <div className="mt-6 space-y-5 text-base leading-relaxed text-foreground/85 sm:text-lg">
         <p>
-          Every month you leave the leaks untouched, you are not standing
-          still. You are paying for attention that does not become
-          conversations, conversations that do not become opportunities, and
-          opportunities that disappear because the next step was unclear.
+          Leaving the leaks untouched does not keep things steady. It quietly
+          drains your growth. You are paying for attention that does not
+          become conversations, conversations that do not become
+          opportunities, and opportunities that disappear because the next
+          step was unclear.
         </p>
         <p>
           You do not need to gamble on another giant marketing plan. You need
