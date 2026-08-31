@@ -4,88 +4,82 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Stark & Barker — navy + gold identity (locked)
-   * Hex values match the brand spec exactly.
-   * Background is applied as a top-to-bottom gradient in @layer base below;
-   * --background here is the base solid navy used by Tailwind's bg-background utility. */
-  --background: #122741;
-  --background-deep: #0A1626;
-  --foreground: #F3EEE6;
-  --card: #142B47;
-  --card-foreground: #F3EEE6;
-  --popover: #142B47;
-  --popover-foreground: #F3EEE6;
-  --primary: #D28B4A;
-  --primary-foreground: #0A1626;
-  --secondary: #1B3350;
-  --secondary-foreground: #F3EEE6;
-  --muted: #1B3350;
-  --muted-foreground: #8FA0B4;
-  --accent: #D28B4A;
-  --accent-foreground: #0A1626;
-  --destructive: #C25450;
-  --destructive-foreground: #F3EEE6;
-  --border: rgba(210, 139, 74, 0.22);
-  --input: #1B3350;
-  --ring: #D28B4A;
-  --chart-1: #D28B4A;
-  --chart-2: #F3EEE6;
-  --chart-3: #8FA0B4;
-  --chart-4: #1B3350;
-  --chart-5: #0A1626;
-  --radius: 0.5rem;
-  --sidebar: #0A1626;
-  --sidebar-foreground: #F3EEE6;
-  --sidebar-primary: #D28B4A;
-  --sidebar-primary-foreground: #0A1626;
-  --sidebar-accent: #1B3350;
-  --sidebar-accent-foreground: #F3EEE6;
-  --sidebar-border: rgba(210, 139, 74, 0.22);
-  --sidebar-ring: #D28B4A;
+  /* Stark & Barker — warm ivory ground, deep ink, single oxblood accent */
+  --background: oklch(0.93 0.025 85);
+  --foreground: oklch(0.20 0.012 75);
+  --card: oklch(0.93 0.025 85);
+  --card-foreground: oklch(0.20 0.012 75);
+  --popover: oklch(0.93 0.025 85);
+  --popover-foreground: oklch(0.20 0.012 75);
+  --primary: oklch(0.20 0.012 75);
+  --primary-foreground: oklch(0.93 0.025 85);
+  --secondary: oklch(0.88 0.022 80);
+  --secondary-foreground: oklch(0.20 0.012 75);
+  --muted: oklch(0.88 0.022 80);
+  --muted-foreground: oklch(0.44 0.018 75);
+  --accent: oklch(0.42 0.110 30);
+  --accent-foreground: oklch(0.93 0.025 85);
+  --destructive: oklch(0.42 0.110 30);
+  --destructive-foreground: oklch(0.93 0.025 85);
+  --border: oklch(0.80 0.020 80);
+  --input: oklch(0.88 0.022 80);
+  --ring: oklch(0.42 0.110 30);
+  --chart-1: oklch(0.42 0.110 30);
+  --chart-2: oklch(0.50 0.030 75);
+  --chart-3: oklch(0.30 0.015 75);
+  --chart-4: oklch(0.65 0.040 75);
+  --chart-5: oklch(0.20 0.012 75);
+  --radius: 0.25rem;
+  --sidebar: oklch(0.93 0.025 85);
+  --sidebar-foreground: oklch(0.20 0.012 75);
+  --sidebar-primary: oklch(0.20 0.012 75);
+  --sidebar-primary-foreground: oklch(0.93 0.025 85);
+  --sidebar-accent: oklch(0.88 0.022 80);
+  --sidebar-accent-foreground: oklch(0.20 0.012 75);
+  --sidebar-border: oklch(0.80 0.020 80);
+  --sidebar-ring: oklch(0.42 0.110 30);
 }
 
 .dark {
-  --background: #122741;
-  --background-deep: #0A1626;
-  --foreground: #F3EEE6;
-  --card: #142B47;
-  --card-foreground: #F3EEE6;
-  --popover: #142B47;
-  --popover-foreground: #F3EEE6;
-  --primary: #D28B4A;
-  --primary-foreground: #0A1626;
-  --secondary: #1B3350;
-  --secondary-foreground: #F3EEE6;
-  --muted: #1B3350;
-  --muted-foreground: #8FA0B4;
-  --accent: #D28B4A;
-  --accent-foreground: #0A1626;
-  --destructive: #C25450;
-  --destructive-foreground: #F3EEE6;
-  --border: rgba(210, 139, 74, 0.22);
-  --input: #1B3350;
-  --ring: #D28B4A;
-  --chart-1: #D28B4A;
-  --chart-2: #F3EEE6;
-  --chart-3: #8FA0B4;
-  --chart-4: #1B3350;
-  --chart-5: #0A1626;
-  --sidebar: #0A1626;
-  --sidebar-foreground: #F3EEE6;
-  --sidebar-primary: #D28B4A;
-  --sidebar-primary-foreground: #0A1626;
-  --sidebar-accent: #1B3350;
-  --sidebar-accent-foreground: #F3EEE6;
-  --sidebar-border: rgba(210, 139, 74, 0.22);
-  --sidebar-ring: #D28B4A;
+  --background: oklch(0.93 0.025 85);
+  --foreground: oklch(0.20 0.012 75);
+  --card: oklch(0.93 0.025 85);
+  --card-foreground: oklch(0.20 0.012 75);
+  --popover: oklch(0.93 0.025 85);
+  --popover-foreground: oklch(0.20 0.012 75);
+  --primary: oklch(0.20 0.012 75);
+  --primary-foreground: oklch(0.93 0.025 85);
+  --secondary: oklch(0.88 0.022 80);
+  --secondary-foreground: oklch(0.20 0.012 75);
+  --muted: oklch(0.88 0.022 80);
+  --muted-foreground: oklch(0.44 0.018 75);
+  --accent: oklch(0.42 0.110 30);
+  --accent-foreground: oklch(0.93 0.025 85);
+  --destructive: oklch(0.42 0.110 30);
+  --destructive-foreground: oklch(0.93 0.025 85);
+  --border: oklch(0.80 0.020 80);
+  --input: oklch(0.88 0.022 80);
+  --ring: oklch(0.42 0.110 30);
+  --chart-1: oklch(0.42 0.110 30);
+  --chart-2: oklch(0.50 0.030 75);
+  --chart-3: oklch(0.30 0.015 75);
+  --chart-4: oklch(0.65 0.040 75);
+  --chart-5: oklch(0.20 0.012 75);
+  --sidebar: oklch(0.93 0.025 85);
+  --sidebar-foreground: oklch(0.20 0.012 75);
+  --sidebar-primary: oklch(0.20 0.012 75);
+  --sidebar-primary-foreground: oklch(0.93 0.025 85);
+  --sidebar-accent: oklch(0.88 0.022 80);
+  --sidebar-accent-foreground: oklch(0.20 0.012 75);
+  --sidebar-border: oklch(0.80 0.020 80);
+  --sidebar-ring: oklch(0.42 0.110 30);
 }
 
 @theme inline {
   --font-sans: var(--font-sans), 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-sans), 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display), 'Fraunces', ui-serif, Georgia, serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
   --color-background: var(--background);
-  --color-background-deep: var(--background-deep);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
@@ -131,17 +125,9 @@
     scroll-behavior: smooth;
   }
   body {
-    color: var(--foreground);
-    background: linear-gradient(to bottom, var(--background), var(--background-deep));
-    background-attachment: fixed;
-    min-height: 100vh;
+    @apply bg-background text-foreground;
     font-feature-settings: 'kern', 'liga', 'calt';
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  ::selection {
-    background: var(--accent);
-    color: var(--accent-foreground);
   }
 }

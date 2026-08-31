@@ -1,15 +1,8 @@
 import type { Metadata, Viewport } from 'next'
-import { Fraunces, Inter } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { GoogleAnalytics } from '@next/third-parties/google'
 import './globals.css'
-
-const fraunces = Fraunces({
-  subsets: ['latin'],
-  variable: '--font-display',
-  display: 'swap',
-  axes: ['SOFT', 'opsz'],
-})
 
 const inter = Inter({
   subsets: ['latin'],
@@ -19,16 +12,16 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Stark & Barker — Marketing systems that compound',
+    default: 'Stark & Barker — A revenue system you can actually trust',
     template: '%s — Stark & Barker',
   },
   description:
-    'The client pipeline that compounds — qualified conversations every month, built and run for operators selling serious work.',
+    'Stark & Barker helps owners and operators find the leaks, fix the message, and build a clearer path from attention to revenue.',
   generator: 'v0.app',
 }
 
 export const viewport: Viewport = {
-  themeColor: '#ebe4d3',
+  themeColor: '#122741',
   width: 'device-width',
   initialScale: 1,
 }
@@ -39,7 +32,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${inter.variable}`}>
+    <html lang="en" className={inter.variable}>
       <body className="font-sans antialiased">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
