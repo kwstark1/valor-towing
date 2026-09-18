@@ -4,7 +4,7 @@ import { useState, type ReactNode } from "react"
 import type { PipelineResult } from "@/lib/pipeline-math/types"
 import { count, duration, money, numberWord, oneIn, percent, perDollar, plural } from "@/lib/pipeline-math/format"
 import { meetingValueAt } from "@/lib/pipeline-math/engine"
-import { CALENDAR_URL, MARKETING_SCAN_URL } from "@/lib/pipeline-math/help-content"
+import { CALENDAR_URL } from "@/lib/pipeline-math/help-content"
 import { Button, Callout, Card, Disclosure, Eyebrow, Figure, HowFigured, Lede } from "./ui"
 import { ForecastChart } from "./forecast-chart"
 
@@ -510,15 +510,15 @@ function NextStepCard() {
         A short call where we look at your real numbers together, starting with the ones this page says you don&rsquo;t track yet, and tell you plainly what
         we&rsquo;d fix first. No pitch on the call. If we&rsquo;re not the right fit, we&rsquo;ll say so.
       </p>
+      <p className="mt-3 text-base leading-relaxed text-muted-foreground">
+        Send a note through the contact form, mention the Pipeline Math, and we&rsquo;ll set a time that suits you.
+      </p>
       <div className="mt-6 flex flex-wrap gap-3">
         <a
           href={CALENDAR_URL}
           className="inline-flex min-h-12 items-center rounded-md bg-accent px-5 text-base font-medium text-accent-foreground hover:bg-[#dd9a5c]"
         >
-          Book the free scan
-        </a>
-        <a href={MARKETING_SCAN_URL} className="inline-flex min-h-12 items-center px-2 text-base text-muted-foreground hover:text-foreground">
-          Or read about it first
+          Ask about the free scan
         </a>
       </div>
     </Card>

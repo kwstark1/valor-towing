@@ -12,8 +12,9 @@
 import type { PipelineResult } from "./types"
 import { count, duration, money, percent, perDollar } from "./format"
 
-export const MARKETING_SCAN_URL = "https://starkandbarker.com/#contact"
-export const CALENDAR_URL = "https://starkandbarker.com/#contact"
+// Both point at the site's contact form until a booking page exists.
+export const MARKETING_SCAN_URL = "/#contact"
+export const CALENDAR_URL = "/#contact"
 
 // ---------------------------------------------------------------------------
 // Fields
@@ -419,7 +420,7 @@ export const helpSections = {
     title: "Who built this",
     paragraphs: [
       "Stark & Barker, a solo marketing agency for B2B companies. Clients kept asking some version of the same question: what is this spend actually giving me back? Their dashboards couldn't answer it honestly, so this is the arithmetic written out.",
-      "If you'd like someone to look at your real numbers with you, the free Marketing Scan is a short call where we do exactly that. No pitch on the call.",
+      "If you'd like someone to look at your real numbers with you, the free Marketing Scan is a short call where we do exactly that. Send a note through the contact form and we'll set a time. No pitch on the call.",
     ],
   },
 }
