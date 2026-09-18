@@ -1,0 +1,143 @@
+/*
+ * The Pipeline Math — route-scoped theme.
+ * Overrides the site's design tokens inside .pm-theme only, so the rest of
+ * starkandbarker.com keeps its ivory palette.
+ */
+
+.pm-theme {
+  --pm-navy: #122741;
+  --pm-navy-deep: #0a1626;
+  --pm-gold: #d28b4a;
+  --pm-ink: #f3eee6;
+  --pm-slate: #8fa0b4;
+
+  --background: var(--pm-navy);
+  --foreground: var(--pm-ink);
+  --card: #16304f;
+  --card-foreground: var(--pm-ink);
+  --popover: #16304f;
+  --popover-foreground: var(--pm-ink);
+  --primary: var(--pm-gold);
+  --primary-foreground: var(--pm-navy-deep);
+  --secondary: #1b3557;
+  --secondary-foreground: var(--pm-ink);
+  --muted: #1b3557;
+  --muted-foreground: var(--pm-slate);
+  --accent: var(--pm-gold);
+  --accent-foreground: var(--pm-navy-deep);
+  --destructive: #e2a37a;
+  --destructive-foreground: var(--pm-navy-deep);
+  --border: rgba(143, 160, 180, 0.28);
+  --input: rgba(143, 160, 180, 0.28);
+  --ring: var(--pm-gold);
+
+  background: linear-gradient(180deg, var(--pm-navy) 0%, var(--pm-navy-deep) 100%);
+  color: var(--pm-ink);
+  min-height: 100dvh;
+  color-scheme: dark;
+}
+
+/* The site body is ivory; keep overscroll and any gap navy on this route. */
+body:has(.pm-theme) {
+  background-color: #0a1626;
+}
+/* Step changes jump to the top; a smooth scroll there just feels like lag. */
+html:has(.pm-theme) {
+  scroll-behavior: auto;
+}
+
+.pm-theme ::selection {
+  background: rgba(210, 139, 74, 0.35);
+}
+
+.pm-theme input::placeholder,
+.pm-theme textarea::placeholder {
+  color: rgba(143, 160, 180, 0.55);
+}
+
+/* Large confident numbers */
+.pm-figure {
+  font-family: var(--font-display), Georgia, serif;
+  font-variation-settings: "SOFT" 30, "opsz" 72;
+  font-feature-settings: "tnum" 1;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+/* Distinct treatment for assumed / derived values */
+.pm-assumed {
+  border-bottom: 2px dotted var(--pm-gold);
+}
+
+/* Disclosure caret */
+.pm-details > summary {
+  list-style: none;
+  cursor: pointer;
+}
+.pm-details > summary::-webkit-details-marker {
+  display: none;
+}
+.pm-details > summary .pm-caret {
+  transition: transform 160ms ease;
+}
+.pm-details[open] > summary .pm-caret {
+  transform: rotate(90deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pm-theme *,
+  .pm-theme *::before,
+  .pm-theme *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Print: results on one or two clean pages */
+@media print {
+  .pm-theme {
+    background: #fff !important;
+    color: #111 !important;
+    --background: #fff;
+    --foreground: #111;
+    --card: #fff;
+    --card-foreground: #111;
+    --muted-foreground: #444;
+    --border: #bbb;
+    --accent: #8a5320;
+    min-height: auto;
+  }
+  .pm-no-print {
+    display: none !important;
+  }
+  .pm-print-block {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .pm-theme a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .pm-theme .pm-card {
+    border: 1px solid #ccc !important;
+    background: #fff !important;
+    box-shadow: none !important;
+  }
+  .pm-theme .pm-figure {
+    color: #111 !important;
+  }
+  .pm-theme svg text {
+    fill: #111 !important;
+  }
+  .pm-theme .pm-details > summary {
+    display: none;
+  }
+  .pm-theme .pm-details[open] > div {
+    display: block;
+  }
+  @page {
+    margin: 16mm;
+  }
+}

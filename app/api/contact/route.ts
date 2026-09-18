@@ -7,6 +7,9 @@ const schema = z.object({
   email: z.string().trim().email("A valid email is required").max(200),
   message: z.string().trim().min(1, "A message is required").max(5000),
   company: z.string().max(0).optional().or(z.literal("")),
+  // Optional: which form sent this. Only used for the subject line.
+  source: z.string().trim().max(50).optional(),
+  phone: z.string().trim().max(40).optional(),
 })
 
 const TO_ADDRESS =
@@ -46,7 +49,11 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: true })
   }
 
-  const { name, email, message } = parsed.data
+  const { name, email, message, source, phone } = parsed.data
+  const subject =
+    source === "pipeline-math"
+      ? `Pipeline Math sign-up — ${name}`
+      : `New inquiry — ${name}`
 
   const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -55,9 +62,10 @@ export async function POST(request: Request) {
       from: FROM_ADDRESS,
       to: TO_ADDRESS,
       replyTo: email,
-      subject: `New inquiry — ${name}`,
+      subject,
       text: [
         `From: ${name} <${email}>`,
+        ...(phone ? [`Phone: ${phone}`] : []),
         ``,
         message,
         ``,
