@@ -10,7 +10,7 @@ export function HeroSection() {
       </h1>
 
       <p className="mt-8 sm:mt-10 max-w-2xl text-lg sm:text-xl leading-[1.55] text-muted-foreground">
-        The client pipeline that compounds — qualified conversations every
+        The client pipeline that compounds with qualified conversations every
         month, built and run for operators selling serious work.
       </p>
 
@@ -26,9 +26,12 @@ export function HeroSection() {
             →
           </span>
           <span className="border-b border-border group-hover:border-foreground transition-colors">
-            Get in touch
+            See if you&rsquo;re a fit
           </span>
         </Link>
+        <p className="mt-3 text-sm text-muted-foreground">
+          We work with B2B companies where a closed deal is worth $10,000 or more.
+        </p>
       </div>
     </section>
   )

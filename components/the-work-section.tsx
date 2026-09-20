@@ -4,12 +4,12 @@ const services = [
   {
     number: "01",
     name: "Measurement",
-    body: "You see which channels bring revenue and which are bringing real conversations. Attribution, CAC by channel, open deal value — in writing every Monday, so next week’s bets aren’t guesses.",
+    body: "You see what actually happened, in numbers you can check: how many messages landed in the inbox instead of spam, how many got a reply, how many of those replies were worth having, and what each booked meeting cost you. It comes in writing every Monday, so the next week’s decisions get made on what happened rather than on a feeling.",
   },
   {
     number: "02",
-    name: "Production",
-    body: "Content at the speed of attention. Modern workflows for writing, editing, distributing, and atomizing across the channels your buyers actually use. A lean team produces what used to require a department.",
+    name: "Targeting, Outreach, The Sending",
+    body: "The list gets built rather than bought, name by name, against the one thing that qualifies a company: what a closed deal is actually worth to you. Then the domains, the sending accounts, and the warm-up that keep those messages out of spam. The writing starts from your offer and from research into the people who actually buy it, in the words they use themselves, and it goes out at a volume that produces real conversations. We won’t pretend every email is written by hand for one person. It’s written for the buyers you’re trying to reach, and sent at a scale that works.",
   },
   {
     number: "03",
@@ -24,8 +24,10 @@ export function TheWorkSection() {
       <RuleLabel>The Work</RuleLabel>
 
       <p className="mt-14 sm:mt-20 font-display text-2xl sm:text-3xl leading-snug tracking-tight text-foreground">
-        Systems do the leverage.{" "}
-        <span className="text-muted-foreground">We do the judgment.</span>
+        Anyone can put a message in front of thousands of people.{" "}
+        <span className="text-muted-foreground">
+          The work is knowing who to write to, and what to say when you do.
+        </span>
       </p>
 
       <ol className="mt-16 sm:mt-20 space-y-14 sm:space-y-16">
