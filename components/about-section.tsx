@@ -77,9 +77,6 @@ export function AboutSection() {
             See if you&rsquo;re a fit
           </span>
         </Link>
-        <p className="mt-3 text-sm text-muted-foreground">
-          We work with B2B companies where a closed deal is worth $10,000 or more.
-        </p>
       </div>
     </section>
   )
