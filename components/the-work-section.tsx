@@ -8,7 +8,7 @@ const services = [
   },
   {
     number: "02",
-    name: "Targeting, Outreach, The Sending",
+    name: "Targeting, Outreach, The Sending",
     body: "The list gets built rather than bought, name by name, against the one thing that qualifies a company: what a closed deal is actually worth to you. Then the domains, the sending accounts, and the warm-up that keep those messages out of spam. The writing starts from your offer and from research into the people who actually buy it, in the words they use themselves, and it goes out at a volume that produces real conversations. We won’t pretend every email is written by hand for one person. It’s written for the buyers you’re trying to reach, and sent at a scale that works.",
   },
   {

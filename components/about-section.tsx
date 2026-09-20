@@ -41,7 +41,7 @@ export function AboutSection() {
         <div className="mt-12 space-y-7 text-lg sm:text-xl leading-[1.7] text-foreground/85">
           <p>
             <em className="italic text-foreground">Stark</em>{" "}— for the
-            unvarnished truth. Reports that don't soften the numbers, even
+            unvarnished truth. Reports that don&rsquo;t soften the numbers, even
             when the misses are ours to fix.
           </p>
           <p>
@@ -57,7 +57,7 @@ export function AboutSection() {
             Then we build the pipelines that make sure your market hears it.
           </p>
           <p className="text-muted-foreground italic">
-            That's the firm in a sentence.
+            That&rsquo;s the firm in a sentence.
           </p>
         </div>
       </div>
