@@ -75,6 +75,79 @@
   --sidebar-ring: oklch(0.42 0.110 30);
 }
 
+/* Preview-only alternates. Selected by `data-theme` on <html> via the
+   inline script in app/layout.tsx. Beige at :root above stays the
+   default and the fallback. */
+[data-theme='navy'] {
+  --background: #0E1B2E;
+  --foreground: #F3EEE6;
+  --card: #16283F;
+  --card-foreground: #F3EEE6;
+  --popover: #16283F;
+  --popover-foreground: #F3EEE6;
+  --primary: #F3EEE6;
+  --primary-foreground: #0E1B2E;
+  --secondary: #16283F;
+  --secondary-foreground: #F3EEE6;
+  --muted: #16283F;
+  --muted-foreground: #8FA0B4;
+  --accent: #D28B4A;
+  --accent-foreground: #0E1B2E;
+  --destructive: #D28B4A;
+  --destructive-foreground: #0E1B2E;
+  --border: #24384F;
+  --input: #16283F;
+  --ring: #D28B4A;
+  --chart-1: #D28B4A;
+  --chart-2: #8FA0B4;
+  --chart-3: #24384F;
+  --chart-4: #F3EEE6;
+  --chart-5: #16283F;
+  --sidebar: #0E1B2E;
+  --sidebar-foreground: #F3EEE6;
+  --sidebar-primary: #F3EEE6;
+  --sidebar-primary-foreground: #0E1B2E;
+  --sidebar-accent: #16283F;
+  --sidebar-accent-foreground: #F3EEE6;
+  --sidebar-border: #24384F;
+  --sidebar-ring: #D28B4A;
+}
+
+[data-theme='navy-deep'] {
+  --background: #0A1626;
+  --foreground: #F3EEE6;
+  --card: #122741;
+  --card-foreground: #F3EEE6;
+  --popover: #122741;
+  --popover-foreground: #F3EEE6;
+  --primary: #F3EEE6;
+  --primary-foreground: #0A1626;
+  --secondary: #122741;
+  --secondary-foreground: #F3EEE6;
+  --muted: #122741;
+  --muted-foreground: #8FA0B4;
+  --accent: #D28B4A;
+  --accent-foreground: #0A1626;
+  --destructive: #D28B4A;
+  --destructive-foreground: #0A1626;
+  --border: #1E3149;
+  --input: #122741;
+  --ring: #D28B4A;
+  --chart-1: #D28B4A;
+  --chart-2: #8FA0B4;
+  --chart-3: #1E3149;
+  --chart-4: #F3EEE6;
+  --chart-5: #122741;
+  --sidebar: #0A1626;
+  --sidebar-foreground: #F3EEE6;
+  --sidebar-primary: #F3EEE6;
+  --sidebar-primary-foreground: #0A1626;
+  --sidebar-accent: #122741;
+  --sidebar-accent-foreground: #F3EEE6;
+  --sidebar-border: #1E3149;
+  --sidebar-ring: #D28B4A;
+}
+
 @theme inline {
   --font-sans: var(--font-sans), 'Inter', ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-display), 'Fraunces', ui-serif, Georgia, serif;
