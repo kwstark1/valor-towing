@@ -36,7 +36,10 @@ export function TheWorkSection() {
             key={s.number}
             className="grid grid-cols-[auto_1fr] gap-x-6 sm:gap-x-10 gap-y-4 items-baseline"
           >
-            <span className="font-display text-base sm:text-lg text-muted-foreground tabular-nums tracking-wide">
+            <span
+              data-role="numeral"
+              className="font-display text-base sm:text-lg text-muted-foreground tabular-nums tracking-wide"
+            >
               {s.number}
             </span>
             <h3 className="font-display text-2xl sm:text-3xl tracking-tight text-foreground">

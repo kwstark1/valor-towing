@@ -113,6 +113,18 @@
   --sidebar-ring: #D28B4A;
 }
 
+/* Dark-theme-only promotions: numerals and hairline rules pick up the
+   copper accent under navy / navy-deep. Beige (no data-theme) is not
+   selected and stays on its existing muted-foreground / border values. */
+[data-theme='navy'] [data-role='numeral'],
+[data-theme='navy-deep'] [data-role='numeral'] {
+  color: var(--accent);
+}
+[data-theme='navy'] [data-role='rule'],
+[data-theme='navy-deep'] [data-role='rule'] {
+  background-color: var(--accent);
+}
+
 [data-theme='navy-deep'] {
   --background: #0A1626;
   --foreground: #F3EEE6;
