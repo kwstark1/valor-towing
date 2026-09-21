@@ -28,15 +28,10 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#ebe4d3',
+  themeColor: '#0E1B2E',
   width: 'device-width',
   initialScale: 1,
 }
-
-// Preview-only theme switch. Reads ?theme=navy | ?theme=navy-deep from the URL
-// and sets data-theme on <html> before body paints (avoids FOUC). Anything
-// else falls back to the beige default in globals.css.
-const themeSwitchScript = `(function(){try{var m=/[?&]theme=([^&]+)/.exec(location.search);var t=m?decodeURIComponent(m[1]):'';if(t==='navy'||t==='navy-deep'){document.documentElement.setAttribute('data-theme',t)}}catch(e){}})();`
 
 export default function RootLayout({
   children,
@@ -44,14 +39,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={`${fraunces.variable} ${inter.variable}`}
-    >
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: themeSwitchScript }} />
-      </head>
+    <html lang="en" className={`${fraunces.variable} ${inter.variable}`}>
       <body className="font-sans antialiased">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
