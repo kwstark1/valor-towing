@@ -17,14 +17,33 @@ const inter = Inter({
   display: 'swap',
 })
 
+const siteUrl = 'https://starkandbarker.com'
+const siteTitle = 'Stark & Barker | B2B cold email outreach'
+const siteDescription =
+  'The client pipeline that compounds with qualified conversations every month, built and run for operators selling serious work.'
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
-    default: 'Stark & Barker — Marketing systems that compound',
-    template: '%s — Stark & Barker',
+    default: siteTitle,
+    template: '%s | Stark & Barker',
   },
-  description:
-    'The client pipeline that compounds with qualified conversations every month, built and run for operators selling serious work.',
-  generator: 'v0.app',
+  description: siteDescription,
+  openGraph: {
+    title: siteTitle,
+    description: siteDescription,
+    url: siteUrl,
+    siteName: 'Stark & Barker',
+    type: 'website',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: siteTitle,
+    description: siteDescription,
+    creator: '@Stark_Barker',
+    site: '@Stark_Barker',
+  },
 }
 
 export const viewport: Viewport = {
