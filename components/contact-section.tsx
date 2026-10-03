@@ -2,15 +2,6 @@ import { RuleLabel } from "@/components/rule-label"
 import { ContactForm } from "@/components/contact-form"
 import { EmailCta } from "@/components/email-cta"
 
-const socials = [
-  { name: "LinkedIn", href: "https://linkedin.com/company/starkandbarker" },
-  { name: "X", href: "https://x.com/Stark_Barker" },
-  { name: "YouTube", href: "https://www.youtube.com/@stark_barker" },
-  { name: "Instagram", href: "https://www.instagram.com/starkandbarker/" },
-  { name: "Threads", href: "https://www.threads.com/@starkandbarker" },
-  { name: "Facebook", href: "https://www.facebook.com/61589220008543/" },
-]
-
 export function ContactSection() {
   return (
     <section
@@ -36,26 +27,6 @@ export function ContactSection() {
         <span>Or write directly:</span>
         <EmailCta />
       </div>
-
-      <ul className="mt-16 sm:mt-20 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm font-sans uppercase tracking-[0.18em]">
-        {socials.map((s, i) => (
-          <li key={s.name} className="flex items-center gap-x-6">
-            <a
-              href={s.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground transition-colors"
-            >
-              {s.name}
-            </a>
-            {i < socials.length - 1 && (
-              <span aria-hidden="true" className="text-border">
-                ·
-              </span>
-            )}
-          </li>
-        ))}
-      </ul>
     </section>
   )
 }
