@@ -25,7 +25,7 @@ export const PROOF = {
 // TODO(Ken): review these against how your launches actually run.
 export const TIMELINES = {
   numbers: "About 2 minutes",
-  call: "20 to 30 minutes",
+  call: "30 to 45 minutes",
   launch: "First sends in 2 to 4 weeks",
 }
 
