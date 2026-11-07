@@ -11,7 +11,7 @@ export function ProblemSection() {
 
       <div className="mt-8 space-y-6 text-base sm:text-lg leading-[1.7]">
         <p className="text-foreground/85">
-          Both depend on strangers choosing to find you. When they slow down, the pipeline stops, because there&rsquo;s
+          Both depend on someone else making the first move. When they slow down, the pipeline stops, because there&rsquo;s
           no system for starting conversations with people who&rsquo;ve never heard of you.
         </p>
         <p className="text-foreground">

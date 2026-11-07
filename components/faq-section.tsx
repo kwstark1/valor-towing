@@ -3,9 +3,9 @@ import { RuleLabel } from "@/components/rule-label"
 // TODO(Ken): review every answer below before this goes live. One list feeds both the accordion and the FAQPage schema.
 const FAQS = [
   {
-    // TODO(Ken): review. "Five figures" stands in for $10,000 because dollar amounts stay inside the calculator.
+    // Ken's wording (2026-11-07). The one dollar figure on the homepage, by his choice; it's a deal size, not pricing.
     q: "Who is this for?",
-    a: "B2B companies in any industry where a single closed deal is worth five figures or more. At that size, a few good meetings a month can pay for the whole program. If your deals are smaller, cold outreach at this volume usually doesn’t pay for itself.",
+    a: "B2B companies in any industry where a single closed deal is worth $10,000 or more. Most B2B sellers close somewhere between 1 in 4 and 1 in 6 qualified meetings, so roughly five meetings tends to turn into one new customer. At $10,000 or more per deal, that one customer covers the program several times over. If your deals are smaller, the math gets tight fast, and cold outreach at this volume usually isn’t worth it.",
   },
   {
     // TODO(Ken): review.
