@@ -46,6 +46,7 @@ export function RoiCalculator() {
       setPeriod(state.period)
     }
     applyHash()
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- the URL hash only exists in the browser, so it's read after hydration
     setReady(true)
     window.addEventListener("hashchange", applyHash)
     return () => window.removeEventListener("hashchange", applyHash)
@@ -449,6 +450,7 @@ function Results({
           </button>
           <p className="mt-1 text-[0.7rem] text-muted-foreground">
             Prefer to write?{" "}
+            {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- hash link stays a plain <a>, see components/button.tsx */}
             <a href="/#contact" className={linkButton}>
               Send a note
             </a>
