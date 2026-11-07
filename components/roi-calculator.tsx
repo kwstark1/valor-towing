@@ -90,15 +90,10 @@ export function RoiCalculator() {
 
   return (
     <div className="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-10">
-      <section aria-labelledby="roi-heading" className="space-y-3">
-        <div className="pb-1">
-          <h1 id="roi-heading" className="font-display text-2xl leading-tight tracking-tight text-foreground">
-            What could cold email return for you?
-          </h1>
-          <p className="mt-1 text-xs text-muted-foreground">
-            Move the sliders to match your business. The estimate updates as you go.
-          </p>
-        </div>
+      <section aria-labelledby="roi-heading" className="space-y-2.5">
+        <h1 id="roi-heading" className="pb-1 font-display text-2xl leading-tight tracking-tight text-foreground">
+          What could cold email return for you?
+        </h1>
 
         <Slider
           id="roi-bundles"
@@ -162,13 +157,18 @@ export function RoiCalculator() {
           help="Of the calls you take, the share that become customers."
         />
 
-        <div className="flex flex-wrap items-center gap-x-5 gap-y-1 border-t border-border pt-2.5 text-xs">
-          <button type="button" onClick={reset} className={linkButton}>
-            Reset to defaults
-          </button>
-          <button type="button" onClick={copyLink} className={linkButton} aria-live="polite">
-            {copied ? "Link copied" : "Copy link to these numbers"}
-          </button>
+        <div className="space-y-1.5 border-t border-border pt-2.5">
+          <p className="text-xs leading-snug text-foreground/75">
+            These are starting estimates, not promises. Your real numbers depend on your offer and market.
+          </p>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-1 text-xs">
+            <button type="button" onClick={reset} className={linkButton}>
+              Reset to defaults
+            </button>
+            <button type="button" onClick={copyLink} className={linkButton} aria-live="polite">
+              {copied ? "Link copied" : "Copy link to these numbers"}
+            </button>
+          </div>
         </div>
       </section>
 
@@ -311,6 +311,7 @@ function Results({
 }) {
   const r = calculate(d, period)
   const perLabel = period === "monthly" ? "per month" : "per quarter"
+  const per = period === "monthly" ? "a month" : "a quarter"
 
   const funnel = [
     { label: "Contacted", value: r.contacts, note: `${EMAILS_PER_CONTACT} emails each`, of: "" },
@@ -393,7 +394,7 @@ function Results({
             {revenueText}
           </p>
           <p className="mt-1.5 text-xs text-muted-foreground">
-            {whole.format(r.deals)} {plural(r.deals, "deal", "deals")} × {money.format(d.dealSize)} deal size, {perLabel}
+            About {whole.format(r.deals)} {plural(r.deals, "deal", "deals")} {per} × {money.format(d.dealSize)} deal size
           </p>
         </div>
         <dl className="grid grid-cols-3 gap-x-6 gap-y-2.5">
@@ -583,9 +584,8 @@ function DealSize({ value, onChange }: { value: number; onChange: (value: number
         ))}
       </div>
       {value < DEAL_SIZE_QUALIFIER ? (
-        <p className="mt-1.5 text-[0.7rem] leading-snug text-muted-foreground">
-          We work with companies where a closed deal is worth {money.format(DEAL_SIZE_QUALIFIER)} or more. Below that,
-          cold outreach at this volume usually doesn’t pay for itself.
+        <p className="mt-1 text-[0.7rem] leading-snug text-muted-foreground">
+          Our results work best for deals of {money.format(DEAL_SIZE_QUALIFIER)} or more.
         </p>
       ) : null}
     </div>

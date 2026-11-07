@@ -29,7 +29,7 @@ export const DEFAULTS: RoiInputs = {
 export const RANGES = {
   bundles: { min: 1, max: 10, step: 1 },
   dealSize: { min: 5_000, max: 100_000, step: 1_000 },
-  dealSizeEntry: { min: 1_000, max: 1_000_000 },
+  dealSizeEntry: { min: 1, max: 10_000_000 },
   engagementRate: { min: 0.5, max: 10, step: 0.5 },
   qualifiedRate: { min: 5, max: 50, step: 1 },
   meetingRate: { min: 10, max: 100, step: 1 },
@@ -48,22 +48,23 @@ function wholeDown(n: number) {
 }
 
 export function calculate(inputs: RoiInputs, period: Period = "monthly") {
+  // Each stage rounds down from the whole number shown for the stage before it, so every line of the
+  // visible math adds up, and billing and revenue use exactly the counts the page shows.
   const contacts = inputs.bundles * CONTACTS_PER_BUNDLE
-  const engaged = share(contacts, inputs.engagementRate)
-  const qualified = share(engaged, inputs.qualifiedRate)
-  const booked = share(qualified, inputs.meetingRate)
-  const attended = share(booked, inputs.showRate)
-  const deals = share(attended, inputs.closeRate)
+  const engaged = wholeDown(share(contacts, inputs.engagementRate))
+  const qualified = wholeDown(share(engaged, inputs.qualifiedRate))
+  const booked = wholeDown(share(qualified, inputs.meetingRate))
+  const attended = wholeDown(share(booked, inputs.showRate))
+  const deals = wholeDown(share(attended, inputs.closeRate))
 
-  // Billing and revenue use the same whole numbers the page shows, so the visible math adds up.
   const monthly = {
     contacts,
     emails: contacts * EMAILS_PER_CONTACT,
-    engaged: wholeDown(engaged),
-    qualified: wholeDown(qualified),
-    booked: wholeDown(booked),
-    attended: wholeDown(attended),
-    deals: wholeDown(deals),
+    engaged,
+    qualified,
+    booked,
+    attended,
+    deals,
   }
 
   const infrastructureCost = inputs.bundles * BUNDLE_PRICE
