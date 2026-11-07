@@ -6,7 +6,7 @@
 export const CALCULATOR_PATH = "/calculator"
 export const CALCULATOR_LIVE = true
 
-export const CALENDLY_URL = "https://calendly.com/pipelines-starkandbarker/new-meeting"
+export const CALENDLY_URL = "https://calendly.com/pipelines-starkandbarker/pipeline-review"
 // "Book a call" pre-fills only name and email; the event's notes question stays empty for the prospect.
 
 // TODO(Ken): set BEEHIIV_API_KEY and BEEHIIV_PUBLICATION_ID in Vercel (Preview + Production), then redeploy.

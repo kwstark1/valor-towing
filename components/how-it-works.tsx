@@ -9,7 +9,7 @@ const STEPS = [
     link: { label: "Open the calculator", href: calculatorHref() },
   },
   {
-    title: "Short call",
+    title: "Pipeline Review",
     body: "Talk through your offer, your buyers, and whether the numbers work for you.",
     timeline: TIMELINES.call,
   },
