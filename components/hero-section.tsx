@@ -16,7 +16,7 @@ export function HeroSection() {
 
       <div className="mt-10 sm:mt-12">
         <Link
-          href="#contact"
+          href="/calculator"
           className="group inline-flex items-baseline gap-3 font-sans text-base sm:text-lg text-foreground"
         >
           <span

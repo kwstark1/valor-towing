@@ -64,7 +64,7 @@ export function AboutSection() {
 
       <div className="mt-16 sm:mt-20">
         <Link
-          href="/#contact"
+          href="/calculator"
           className="group inline-flex items-baseline gap-3 font-sans text-base sm:text-lg text-foreground"
         >
           <span

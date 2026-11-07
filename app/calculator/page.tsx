@@ -3,9 +3,9 @@ import Link from "next/link"
 import { RoiCalculator } from "@/components/roi-calculator"
 import { Footer } from "@/components/footer"
 
-const roiTitle = "ROI estimate | Stark & Barker"
-const roiDescription =
-  "Estimate what cold email outreach could return for your business, using your own numbers."
+const pageTitle = "ROI calculator | Stark & Barker"
+const pageDescription =
+  "See what cold email outreach could return for your business, using your own numbers, and what it would cost."
 const shareImage = {
   url: "/opengraph-image.png",
   width: 1200,
@@ -13,15 +13,13 @@ const shareImage = {
   alt: "Stark & Barker",
 }
 
-// Unlinked while placement is decided, so it stays out of search until then.
 export const metadata: Metadata = {
-  title: "ROI estimate",
-  description: roiDescription,
-  robots: { index: false, follow: false },
+  title: "ROI calculator",
+  description: pageDescription,
   openGraph: {
-    title: roiTitle,
-    description: roiDescription,
-    url: "/roi",
+    title: pageTitle,
+    description: pageDescription,
+    url: "/calculator",
     siteName: "Stark & Barker",
     type: "website",
     locale: "en_US",
@@ -29,15 +27,15 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: roiTitle,
-    description: roiDescription,
+    title: pageTitle,
+    description: pageDescription,
     creator: "@Stark_Barker",
     site: "@Stark_Barker",
     images: [shareImage],
   },
 }
 
-export default function RoiPage() {
+export default function CalculatorPage() {
   return (
     <>
       <header className="border-b border-border/60">
@@ -45,7 +43,7 @@ export default function RoiPage() {
           <Link href="/" className="font-display text-xl leading-none tracking-tight text-foreground">
             Stark <span className="font-normal text-muted-foreground">&amp;</span> Barker
           </Link>
-          <span className="text-[0.7rem] uppercase tracking-[0.18em] text-muted-foreground">ROI estimate</span>
+          <span className="text-[0.7rem] uppercase tracking-[0.18em] text-muted-foreground">ROI calculator</span>
         </div>
       </header>
       <main className="mx-auto max-w-6xl px-6 py-6 sm:px-8 lg:py-5">

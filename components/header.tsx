@@ -13,12 +13,18 @@ export function Header() {
             Stark <span className="text-muted-foreground font-normal">&amp;</span> Barker
           </Link>
 
-          <nav>
+          <nav className="flex items-center gap-6">
             <Link
               href="/about"
               className="text-sm font-sans uppercase tracking-[0.18em] text-muted-foreground hover:text-foreground transition-colors"
             >
               About
+            </Link>
+            <Link
+              href="/calculator"
+              className="hidden md:inline-flex rounded border border-accent/70 px-3 py-1.5 text-xs font-sans uppercase tracking-[0.16em] text-accent hover:bg-accent hover:text-accent-foreground transition-colors"
+            >
+              See if you&rsquo;re a fit
             </Link>
           </nav>
         </div>

@@ -6,7 +6,6 @@ export type RoiInputs = {
   meetingRate: number
   showRate: number
   closeRate: number
-  managementFee: number
 }
 
 export type Period = "monthly" | "quarterly"
@@ -25,11 +24,10 @@ export const DEFAULTS: RoiInputs = {
   meetingRate: 50,
   showRate: 75,
   closeRate: 15,
-  managementFee: 0,
 }
 
 export const RANGES = {
-  bundles: { min: 1, max: 15, step: 1 },
+  bundles: { min: 1, max: 10, step: 1 },
   dealSize: { min: 5_000, max: 100_000, step: 1_000 },
   dealSizeEntry: { min: 1_000, max: 1_000_000 },
   engagementRate: { min: 0.5, max: 10, step: 0.5 },
@@ -37,7 +35,6 @@ export const RANGES = {
   meetingRate: { min: 10, max: 100, step: 1 },
   showRate: { min: 40, max: 100, step: 1 },
   closeRate: { min: 10, max: 60, step: 1 },
-  managementFee: { min: 0, max: 100_000 },
 } as const
 
 // Rates are whole percentages; multiplying before dividing keeps the default funnel exact.
@@ -70,9 +67,8 @@ export function calculate(inputs: RoiInputs, period: Period = "monthly") {
   }
 
   const infrastructureCost = inputs.bundles * BUNDLE_PRICE
-  const managementCost = inputs.managementFee
   const meetingCost = monthly.attended * MEETING_FEE
-  const totalCost = infrastructureCost + managementCost + meetingCost
+  const totalCost = infrastructureCost + meetingCost
   const revenue = monthly.deals * inputs.dealSize
 
   const factor = period === "quarterly" ? 3 : 1
@@ -86,7 +82,6 @@ export function calculate(inputs: RoiInputs, period: Period = "monthly") {
     attended: monthly.attended * factor,
     deals: monthly.deals * factor,
     infrastructureCost: infrastructureCost * factor,
-    managementCost: managementCost * factor,
     meetingCost: meetingCost * factor,
     totalCost: totalCost * factor,
     revenue: revenue * factor,
@@ -107,7 +102,6 @@ const HASH_KEYS: Record<keyof RoiInputs, string> = {
   meetingRate: "meet",
   showRate: "show",
   closeRate: "close",
-  managementFee: "fee",
 }
 
 function clamp(n: number, min: number, max: number) {
@@ -123,7 +117,6 @@ export function clampInputs(inputs: RoiInputs): RoiInputs {
     meetingRate: clamp(inputs.meetingRate, RANGES.meetingRate.min, RANGES.meetingRate.max),
     showRate: clamp(inputs.showRate, RANGES.showRate.min, RANGES.showRate.max),
     closeRate: clamp(inputs.closeRate, RANGES.closeRate.min, RANGES.closeRate.max),
-    managementFee: Math.round(clamp(inputs.managementFee, RANGES.managementFee.min, RANGES.managementFee.max)),
   }
 }
 
@@ -147,4 +140,13 @@ export function decodeHash(hash: string): { inputs: RoiInputs; period: Period } 
     if (Number.isFinite(n)) inputs[key] = n
   }
   return { inputs: clampInputs(inputs), period: params.get("p") === "q" ? "quarterly" : "monthly" }
+}
+
+// Calendly prefills name and email natively; a1 fills the event's first custom question.
+export function calendlyUrl(base: string, lead: { name: string; email: string }, dealSize: number) {
+  const url = new URL(base)
+  url.searchParams.set("name", lead.name)
+  url.searchParams.set("email", lead.email)
+  url.searchParams.set("a1", `$${dealSize.toLocaleString("en-US")}`)
+  return url.toString()
 }

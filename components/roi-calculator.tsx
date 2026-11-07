@@ -1,13 +1,7 @@
 "use client"
 
-import {
-  useDeferredValue,
-  useEffect,
-  useState,
-  type ChangeEvent,
-  type KeyboardEvent,
-  type ReactNode,
-} from "react"
+import { useDeferredValue, useEffect, useState, type ChangeEvent, type FormEvent, type KeyboardEvent } from "react"
+import { sendGAEvent } from "@next/third-parties/google"
 import {
   BUNDLE_PRICE,
   CONTACTS_PER_BUNDLE,
@@ -17,6 +11,7 @@ import {
   MEETING_FEE,
   RANGES,
   calculate,
+  calendlyUrl,
   clampInputs,
   decodeHash,
   encodeHash,
@@ -30,20 +25,23 @@ const pct = (n: number) => `${n}%`
 const plural = (n: number, one: string, many: string) => (n === 1 ? one : many)
 
 const DEAL_CHIPS = [10_000, 25_000, 50_000, 100_000]
+const CALENDLY_URL = process.env.NEXT_PUBLIC_CALENDLY_URL
+const PRIVACY_URL = "https://www.privacypolicies.com/live/5f9bc43b-bef0-4dd1-8eaa-eaedd4a9b9a6"
+
+type Lead = { name: string; email: string }
 
 export function RoiCalculator() {
   const [inputs, setInputs] = useState<RoiInputs>(DEFAULTS)
   const [period, setPeriod] = useState<Period>("monthly")
   const [ready, setReady] = useState(false)
-  const [showFee, setShowFee] = useState(false)
   const [copied, setCopied] = useState(false)
+  const [lead, setLead] = useState<Lead | null>(null)
 
   useEffect(() => {
     function applyHash() {
       const state = decodeHash(window.location.hash)
       setInputs(state.inputs)
       setPeriod(state.period)
-      if (state.inputs.managementFee > 0) setShowFee(true)
     }
     applyHash()
     setReady(true)
@@ -62,9 +60,6 @@ export function RoiCalculator() {
   }, [inputs, period, ready])
 
   const d = useDeferredValue(inputs)
-  const r = calculate(d, period)
-  const per = period === "monthly" ? "a month" : "a quarter"
-  const perLabel = period === "monthly" ? "per month" : "per quarter"
 
   function set<K extends keyof RoiInputs>(key: K, value: RoiInputs[K]) {
     setInputs((prev) => clampInputs({ ...prev, [key]: value }))
@@ -73,7 +68,6 @@ export function RoiCalculator() {
   function reset() {
     setInputs(DEFAULTS)
     setPeriod("monthly")
-    setShowFee(false)
   }
 
   async function copyLink() {
@@ -87,21 +81,6 @@ export function RoiCalculator() {
       // Clipboard can be blocked; the address bar still holds the same link.
     }
   }
-
-  const funnel = [
-    { label: "Contacted", value: r.contacts, note: `${EMAILS_PER_CONTACT} emails each`, of: "" },
-    { label: "Engaged", value: r.engaged, note: pct(d.engagementRate), of: "of contacted" },
-    { label: "Qualified", value: r.qualified, note: pct(d.qualifiedRate), of: "of engaged" },
-    { label: "Meetings booked", value: r.booked, note: pct(d.meetingRate), of: "of qualified" },
-    { label: "Meetings attended", value: r.attended, note: pct(d.showRate), of: "of booked, the billing line", billing: true },
-    { label: "Deals closed", value: r.deals, note: pct(d.closeRate), of: "of attended" },
-  ]
-  const scale = Math.log10(r.contacts + 1)
-
-  const revenueText = money.format(r.revenue)
-  // From $1,000,000 up the headline needs the full width, so the figures drop below it.
-  const wideHeadline = revenueText.length > 9
-  const revenueSize = revenueText.length <= 11 ? "text-5xl" : revenueText.length <= 14 ? "text-4xl" : "text-3xl"
 
   return (
     <div className="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-10">
@@ -147,7 +126,7 @@ export function RoiCalculator() {
           {...RANGES.qualifiedRate}
           display={pct(inputs.qualifiedRate)}
           onChange={(v) => set("qualifiedRate", v)}
-          help={`Of those engaged, the share who are a genuine fit (${whole.format(r.qualified)} ${per}).`}
+          help={`Of those engaged, the share who are a genuine fit (${whole.format(calculate(d).qualified)} a month).`}
         />
         <Slider
           id="roi-meeting"
@@ -177,17 +156,6 @@ export function RoiCalculator() {
           help="Of the calls you take, the share that become customers."
         />
 
-        {showFee ? (
-          <ManagementFee
-            value={inputs.managementFee}
-            onChange={(v) => set("managementFee", v)}
-            onRemove={() => {
-              set("managementFee", 0)
-              setShowFee(false)
-            }}
-          />
-        ) : null}
-
         <div className="flex flex-wrap items-center gap-x-5 gap-y-1 border-t border-border pt-2.5 text-xs">
           <button type="button" onClick={reset} className={linkButton}>
             Reset to defaults
@@ -195,142 +163,299 @@ export function RoiCalculator() {
           <button type="button" onClick={copyLink} className={linkButton} aria-live="polite">
             {copied ? "Link copied" : "Copy link to these numbers"}
           </button>
-          {!showFee ? (
-            <button type="button" onClick={() => setShowFee(true)} className={linkButton}>
-              Add a management fee
-            </button>
+        </div>
+      </section>
+
+      <section aria-label="Your estimate" className="lg:rounded lg:border lg:border-border lg:bg-card lg:px-6 lg:py-4">
+        {lead ? (
+          <Results inputs={d} period={period} onPeriod={setPeriod} lead={lead} />
+        ) : (
+          <Gate inputs={inputs} onUnlock={setLead} />
+        )}
+      </section>
+    </div>
+  )
+}
+
+function Gate({ inputs, onUnlock }: { inputs: RoiInputs; onUnlock: (lead: Lead) => void }) {
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const [company, setCompany] = useState("")
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  async function submit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    setSubmitting(true)
+    setError(null)
+    try {
+      const res = await fetch("/api/calculator", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, company, inputs }),
+      })
+      if (res.status === 400) {
+        const data = await res.json().catch(() => ({}))
+        setError(data?.error || "Please check your name and email.")
+        setSubmitting(false)
+        return
+      }
+    } catch {
+      // A network or server failure still shows the estimate; the lead isn't worth losing the visitor over.
+    }
+    try {
+      sendGAEvent("event", "generate_lead", { method: "calculator" })
+    } catch {
+      // Analytics failures never block the estimate.
+    }
+    onUnlock({ name: name.trim(), email: email.trim() })
+  }
+
+  return (
+    <div className="space-y-5 py-1">
+      <div>
+        <p className={eyebrow}>Your estimate is ready</p>
+        <h2 className="mt-2 font-display text-2xl leading-snug tracking-tight text-foreground">
+          Enter your name and email to see your numbers.
+        </h2>
+        <p className="mt-2 text-sm text-muted-foreground">
+          You’ll see your pipeline, estimated revenue, the full cost, and what each meeting and each deal would cost you.
+        </p>
+      </div>
+
+      <form onSubmit={submit} className="space-y-4">
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label htmlFor="roi-name" className={fieldLabel}>
+              Name
+            </label>
+            <input
+              id="roi-name"
+              type="text"
+              autoComplete="name"
+              required
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className={fieldClass}
+            />
+          </div>
+          <div>
+            <label htmlFor="roi-email" className={fieldLabel}>
+              Email
+            </label>
+            <input
+              id="roi-email"
+              type="email"
+              autoComplete="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className={fieldClass}
+            />
+          </div>
+        </div>
+        <input
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          value={company}
+          onChange={(e) => setCompany(e.target.value)}
+          className="absolute left-[-9999px] h-0 w-0 opacity-0"
+        />
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+          <button
+            type="submit"
+            disabled={submitting}
+            className="rounded bg-accent px-5 py-2.5 text-sm text-accent-foreground transition-opacity hover:opacity-90 disabled:opacity-50"
+          >
+            {submitting ? "One moment…" : "Show my estimate"}
+          </button>
+          {error ? (
+            <p role="alert" className="text-sm text-accent">
+              {error}
+            </p>
           ) : null}
         </div>
-      </section>
-
-      <section aria-label="Your estimate" className="space-y-3.5 lg:rounded lg:border lg:border-border lg:bg-card lg:px-6 lg:py-4">
-        <div className="flex items-center justify-between gap-4">
-          <h2 className={eyebrow}>Your pipeline, estimated</h2>
-          <div className="inline-flex rounded border border-border p-0.5 text-[0.7rem] uppercase tracking-[0.14em]">
-            {(["monthly", "quarterly"] as const).map((p) => (
-              <button
-                key={p}
-                type="button"
-                aria-pressed={period === p}
-                onClick={() => setPeriod(p)}
-                className={
-                  "rounded-sm px-2.5 py-1 transition-colors " +
-                  (period === p ? "bg-accent text-accent-foreground" : "text-muted-foreground hover:text-foreground")
-                }
-              >
-                {p}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div>
-          <ol className="space-y-1">
-            {funnel.map((row) => (
-              <li key={row.label} className="grid grid-cols-[11rem_minmax(0,1fr)_5rem] items-center gap-x-3">
-                <p className={"truncate text-sm " + (row.billing ? "text-accent" : "text-foreground")}>
-                  {row.label} <span className="text-xs text-muted-foreground">{row.note}</span>
-                  {row.of ? <span className="sr-only"> {row.of}</span> : null}
-                </p>
-                <div className="h-1.5 rounded-full bg-border/60" aria-hidden="true">
-                  <div
-                    className={"h-1.5 rounded-full " + (row.billing ? "bg-accent" : "bg-muted-foreground/45")}
-                    style={{ width: row.value > 0 ? `${Math.max(2, (Math.log10(row.value + 1) / scale) * 100)}%` : "0%" }}
-                  />
-                </div>
-                <p
-                  className={
-                    "text-right font-display text-base tabular-nums " + (row.billing ? "text-accent" : "text-foreground")
-                  }
-                >
-                  {whole.format(row.value)}
-                </p>
-              </li>
-            ))}
-          </ol>
-          <p className="mt-2 text-[0.7rem] leading-snug text-muted-foreground">
-            Month one usually runs lower while new domains warm up. Expect full volume by month two or three.
-          </p>
-        </div>
-
-        <div
-          className={
-            "grid items-end gap-x-6 gap-y-4 border-t border-border pt-4 " +
-            (wideHeadline ? "" : "sm:grid-cols-[minmax(0,1fr)_auto]")
-          }
-        >
-          <div className="min-w-0">
-            <p className={eyebrow}>Estimated revenue</p>
-            <p
-              className={`mt-1.5 whitespace-nowrap font-display ${revenueSize} leading-none tracking-tight tabular-nums text-foreground`}
-            >
-              {revenueText}
-            </p>
-            <p className="mt-1.5 text-xs text-muted-foreground">
-              {whole.format(r.deals)} {plural(r.deals, "deal", "deals")} × {money.format(d.dealSize)} deal size, {perLabel}
-            </p>
-          </div>
-          <dl className="grid grid-cols-3 gap-x-6 gap-y-2.5">
-            <Figure label="Meetings attended" value={whole.format(r.attended)} />
-            <Figure label="Deals closed" value={whole.format(r.deals)} />
-            <Figure label="Return on spend" value={`${r.roiMultiple.toFixed(1)}×`} />
-            <Figure
-              label="Net gain"
-              value={money.format(r.netGain)}
-              tone={r.netGain > 0 ? "text-accent" : "text-muted-foreground"}
-            />
-            <Figure
-              label="Cost per meeting"
-              value={r.costPerMeeting === null ? "—" : money.format(r.costPerMeeting)}
-            />
-            <Figure label="Cost per deal" value={r.costPerDeal === null ? "—" : money.format(r.costPerDeal)} />
-          </dl>
-        </div>
-
-        <div className="border-t border-border pt-3.5">
-          <h2 className={eyebrow}>Your investment {perLabel}</h2>
-          <table className="mt-1.5 w-full text-sm tabular-nums">
-            <tbody>
-              <Row
-                label="Infrastructure (domains, inboxes, sending)"
-                detail={`${money.format(BUNDLE_PRICE)} × ${d.bundles} ${plural(d.bundles, "bundle", "bundles")}${
-                  period === "quarterly" ? " × 3 months" : ""
-                }`}
-                value={money.format(r.infrastructureCost)}
-              />
-              {r.managementCost > 0 ? (
-                <Row
-                  label="Management fee"
-                  detail={period === "quarterly" ? `${money.format(d.managementFee)} × 3 months` : undefined}
-                  value={money.format(r.managementCost)}
-                />
-              ) : null}
-              <Row
-                label="Qualified meetings attended"
-                detail={`${money.format(MEETING_FEE)} × ${whole.format(r.attended)}`}
-                value={money.format(r.meetingCost)}
-              />
-              <tr className="border-t border-border">
-                <th scope="row" className="pt-1 text-left font-normal text-foreground">
-                  Total
-                </th>
-                <td />
-                <td className="pt-1 text-right font-display text-base text-foreground">{money.format(r.totalCost)}</td>
-              </tr>
-            </tbody>
-          </table>
-          <p className="mt-1.5 text-[0.7rem] leading-snug text-muted-foreground">
-            Infrastructure is passed through at cost. Meeting fees are invoiced weekly and charged only for calls the
-            prospect attends. If someone doesn’t show, you aren’t billed for it. Compare cost per meeting and per deal to
-            what a lead or a new customer costs you today.
-          </p>
-        </div>
-
-        <p className="border-t border-border pt-3 text-[0.7rem] leading-snug text-muted-foreground">
-          These are estimates, not projections from past campaigns. Every rate here is adjustable because every business
-          converts differently. Put your own numbers in and see what it says.
+        <p className="text-[0.7rem] leading-snug text-muted-foreground">
+          You’ll also get The Stark &amp; Barker Memo by email. Every issue has a one-click unsubscribe.{" "}
+          <a href={PRIVACY_URL} target="_blank" rel="noopener noreferrer" className={linkButton}>
+            Privacy policy
+          </a>
         </p>
-      </section>
+      </form>
+
+      <div className="border-t border-border pt-4">
+        <p className={eyebrow}>How pricing works</p>
+        <p className="mt-1.5 text-sm leading-relaxed text-foreground/85">
+          {money.format(BUNDLE_PRICE)} a month per bundle for the sending infrastructure, passed through at cost. Then{" "}
+          {money.format(MEETING_FEE)} for each qualified meeting that actually happens. No management fee.
+        </p>
+      </div>
+    </div>
+  )
+}
+
+function Results({
+  inputs: d,
+  period,
+  onPeriod,
+  lead,
+}: {
+  inputs: RoiInputs
+  period: Period
+  onPeriod: (p: Period) => void
+  lead: Lead
+}) {
+  const r = calculate(d, period)
+  const perLabel = period === "monthly" ? "per month" : "per quarter"
+
+  const funnel = [
+    { label: "Contacted", value: r.contacts, note: `${EMAILS_PER_CONTACT} emails each`, of: "" },
+    { label: "Engaged", value: r.engaged, note: pct(d.engagementRate), of: "of contacted" },
+    { label: "Qualified", value: r.qualified, note: pct(d.qualifiedRate), of: "of engaged" },
+    { label: "Meetings booked", value: r.booked, note: pct(d.meetingRate), of: "of qualified" },
+    { label: "Meetings attended", value: r.attended, note: pct(d.showRate), of: "of booked, the billing line", billing: true },
+    { label: "Deals closed", value: r.deals, note: pct(d.closeRate), of: "of attended" },
+  ]
+  const scale = Math.log10(r.contacts + 1)
+
+  const revenueText = money.format(r.revenue)
+  // From $1,000,000 up the headline needs the full width, so the figures drop below it.
+  const wideHeadline = revenueText.length > 9
+  const revenueSize = revenueText.length <= 11 ? "text-5xl" : revenueText.length <= 14 ? "text-4xl" : "text-3xl"
+
+  function book() {
+    if (!CALENDLY_URL) {
+      // TODO(Ken): set NEXT_PUBLIC_CALENDLY_URL on Vercel; until then booking falls back to the contact form.
+      window.location.href = "/#contact"
+      return
+    }
+    // A button rather than a link, so analytics outbound-click tracking never records the prefilled name and email.
+    window.open(calendlyUrl(CALENDLY_URL, lead, d.dealSize), "_blank", "noopener")
+  }
+
+  return (
+    <div className="space-y-3.5">
+      <div className="flex items-center justify-between gap-4">
+        <h2 className={eyebrow}>Your pipeline, estimated</h2>
+        <div className="inline-flex rounded border border-border p-0.5 text-[0.7rem] uppercase tracking-[0.14em]">
+          {(["monthly", "quarterly"] as const).map((p) => (
+            <button
+              key={p}
+              type="button"
+              aria-pressed={period === p}
+              onClick={() => onPeriod(p)}
+              className={
+                "rounded-sm px-2.5 py-1 transition-colors " +
+                (period === p ? "bg-accent text-accent-foreground" : "text-muted-foreground hover:text-foreground")
+              }
+            >
+              {p}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <ol className="space-y-1">
+        {funnel.map((row) => (
+          <li key={row.label} className="grid grid-cols-[11rem_minmax(0,1fr)_5rem] items-center gap-x-3">
+            <p className={"truncate text-sm " + (row.billing ? "text-accent" : "text-foreground")}>
+              {row.label} <span className="text-xs text-muted-foreground">{row.note}</span>
+              {row.of ? <span className="sr-only"> {row.of}</span> : null}
+            </p>
+            <div className="h-1.5 rounded-full bg-border/60" aria-hidden="true">
+              <div
+                className={"h-1.5 rounded-full " + (row.billing ? "bg-accent" : "bg-muted-foreground/45")}
+                style={{ width: row.value > 0 ? `${Math.max(2, (Math.log10(row.value + 1) / scale) * 100)}%` : "0%" }}
+              />
+            </div>
+            <p className={"text-right font-display text-base tabular-nums " + (row.billing ? "text-accent" : "text-foreground")}>
+              {whole.format(row.value)}
+            </p>
+          </li>
+        ))}
+      </ol>
+
+      <div
+        className={
+          "grid items-end gap-x-6 gap-y-4 border-t border-border pt-4 " +
+          (wideHeadline ? "" : "sm:grid-cols-[minmax(0,1fr)_auto]")
+        }
+      >
+        <div className="min-w-0">
+          <p className={eyebrow}>Estimated revenue</p>
+          <p
+            className={`mt-1.5 whitespace-nowrap font-display ${revenueSize} leading-none tracking-tight tabular-nums text-foreground`}
+          >
+            {revenueText}
+          </p>
+          <p className="mt-1.5 text-xs text-muted-foreground">
+            {whole.format(r.deals)} {plural(r.deals, "deal", "deals")} × {money.format(d.dealSize)} deal size, {perLabel}
+          </p>
+        </div>
+        <dl className="grid grid-cols-3 gap-x-6 gap-y-2.5">
+          <Figure label="Meetings attended" value={whole.format(r.attended)} />
+          <Figure label="Deals closed" value={whole.format(r.deals)} />
+          <Figure label="Return on spend" value={`${r.roiMultiple.toFixed(1)}×`} />
+          <Figure label="Net gain" value={money.format(r.netGain)} tone={r.netGain > 0 ? "text-accent" : "text-muted-foreground"} />
+          <Figure label="Cost per meeting" value={r.costPerMeeting === null ? "—" : money.format(r.costPerMeeting)} />
+          <Figure label="Cost per deal" value={r.costPerDeal === null ? "—" : money.format(r.costPerDeal)} />
+        </dl>
+      </div>
+
+      <div className="border-t border-border pt-3.5">
+        <h2 className={eyebrow}>Your investment {perLabel}</h2>
+        <table className="mt-1.5 w-full text-sm tabular-nums">
+          <tbody>
+            <Row
+              label="Infrastructure (domains, inboxes, sending)"
+              detail={`${money.format(BUNDLE_PRICE)} × ${d.bundles} ${plural(d.bundles, "bundle", "bundles")}${
+                period === "quarterly" ? " × 3 months" : ""
+              }`}
+              value={money.format(r.infrastructureCost)}
+            />
+            <Row
+              label="Qualified meetings attended"
+              detail={`${money.format(MEETING_FEE)} × ${whole.format(r.attended)}`}
+              value={money.format(r.meetingCost)}
+            />
+            <tr className="border-t border-border">
+              <th scope="row" className="pt-1 text-left font-normal text-foreground">
+                Total
+              </th>
+              <td />
+              <td className="pt-1 text-right font-display text-base text-foreground">{money.format(r.totalCost)}</td>
+            </tr>
+          </tbody>
+        </table>
+        <p className="mt-1.5 text-[0.7rem] leading-snug text-muted-foreground">
+          Infrastructure is passed through at cost. Meeting fees are invoiced weekly, only for calls the prospect
+          attends. No-shows aren’t billed.
+        </p>
+      </div>
+
+      <div className="flex items-center justify-between gap-6 border-t border-border pt-3.5">
+        <p className="min-w-0 flex-1 text-[0.7rem] leading-snug text-muted-foreground">
+          These are estimates, not projections from past campaigns. Every rate is adjustable because every business
+          converts differently. Month one usually runs lower while new domains warm up.
+        </p>
+        <div className="shrink-0 text-right">
+          <button
+            type="button"
+            onClick={book}
+            className="rounded bg-accent px-5 py-2 text-sm text-accent-foreground transition-opacity hover:opacity-90"
+          >
+            Book a call
+          </button>
+          <p className="mt-1 text-[0.7rem] text-muted-foreground">
+            Prefer to write?{" "}
+            <a href="/#contact" className={linkButton}>
+              Send a note
+            </a>
+          </p>
+        </div>
+      </div>
     </div>
   )
 }
@@ -341,6 +466,10 @@ const linkButton =
   "text-muted-foreground underline decoration-border underline-offset-4 transition-colors hover:text-foreground hover:decoration-foreground"
 
 const rangeClass = "mt-1 h-4 w-full cursor-pointer [accent-color:var(--accent)]"
+
+const fieldLabel = "block text-[0.7rem] uppercase tracking-[0.18em] text-muted-foreground"
+const fieldClass =
+  "mt-1.5 w-full border-0 border-b border-border bg-transparent px-0 py-1.5 text-base text-foreground focus:border-accent focus:outline-none"
 
 function Slider({
   id,
@@ -409,9 +538,6 @@ function useDraftNumber(value: number, onCommit: (n: number) => void) {
   }
 }
 
-const numberInputClass =
-  "w-28 rounded border border-border bg-transparent px-2 py-0.5 text-right font-display text-lg tabular-nums text-foreground focus:border-accent focus:outline-none"
-
 function DealSize({ value, onChange }: { value: number; onChange: (value: number) => void }) {
   const draft = useDraftNumber(value, onChange)
   const { min, max, step } = RANGES.dealSize
@@ -425,7 +551,7 @@ function DealSize({ value, onChange }: { value: number; onChange: (value: number
           type="text"
           inputMode="numeric"
           aria-label="Typical deal size in dollars"
-          className={numberInputClass}
+          className="w-28 rounded border border-border bg-transparent px-2 py-0.5 text-right font-display text-lg tabular-nums text-foreground focus:border-accent focus:outline-none"
           {...draft}
         />
       </div>
@@ -468,34 +594,6 @@ function DealSize({ value, onChange }: { value: number; onChange: (value: number
   )
 }
 
-function ManagementFee({
-  value,
-  onChange,
-  onRemove,
-}: {
-  value: number
-  onChange: (value: number) => void
-  onRemove: () => void
-}) {
-  const draft = useDraftNumber(value, onChange)
-  return (
-    <div>
-      <div className="flex items-center justify-between gap-4">
-        <label htmlFor="roi-fee" className="text-sm text-foreground">
-          Management fee (if quoted)
-        </label>
-        <input id="roi-fee" type="text" inputMode="numeric" className={numberInputClass} {...draft} />
-      </div>
-      <p className="text-[0.7rem] leading-snug text-muted-foreground">
-        Per month.{" "}
-        <button type="button" onClick={onRemove} className={linkButton}>
-          Remove
-        </button>
-      </p>
-    </div>
-  )
-}
-
 function Figure({ label, value, tone }: { label: string; value: string; tone?: string }) {
   return (
     <div className="min-w-0">
@@ -513,7 +611,7 @@ function Figure({ label, value, tone }: { label: string; value: string; tone?: s
   )
 }
 
-function Row({ label, detail, value }: { label: string; detail?: ReactNode; value: string }) {
+function Row({ label, detail, value }: { label: string; detail?: string; value: string }) {
   return (
     <tr>
       <th scope="row" className="py-0.5 pr-3 text-left font-normal text-foreground">
