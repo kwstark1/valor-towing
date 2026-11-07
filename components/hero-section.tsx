@@ -4,7 +4,7 @@ export function HeroSection() {
   return (
     <section className="mx-auto max-w-3xl px-6 sm:px-8 pt-24 sm:pt-36 pb-24 sm:pb-32">
       <p className="font-sans text-xs sm:text-sm font-medium uppercase tracking-[0.22em] text-accent">
-        B2B cold email outreach
+        Performance-based B2B cold email
       </p>
 
       <h1 className="mt-5 sm:mt-6 font-display text-4xl sm:text-6xl font-semibold leading-[1.05] tracking-tight text-foreground">
@@ -22,9 +22,14 @@ export function HeroSection() {
         <FitButton />
       </div>
 
-      <p className="mt-5 flex flex-wrap gap-x-3 gap-y-1 text-sm text-muted-foreground">
+      {/* Stacks below lg; one dotted line from lg up, where the column is wide enough for all three. */}
+      <p className="mt-5 flex flex-col gap-y-1 lg:flex-row lg:flex-wrap lg:gap-x-3 text-sm text-muted-foreground lg:[&>span]:whitespace-nowrap">
         <span>You pay for meetings that happen</span>
-        <span aria-hidden="true" className="text-border">
+        <span aria-hidden="true" className="hidden lg:inline text-border">
+          ·
+        </span>
+        <span>Sending setup at cost</span>
+        <span aria-hidden="true" className="hidden lg:inline text-border">
           ·
         </span>
         <span>Results reported in writing every Monday</span>

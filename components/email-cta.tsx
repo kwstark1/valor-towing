@@ -28,7 +28,7 @@ export function EmailCta({ size = "default" }: { size?: Size }) {
       href={`mailto:${EMAIL}`}
       onClick={handleClick}
       className={
-        "group inline-flex items-baseline gap-3 " +
+        "group inline-flex flex-wrap items-baseline gap-x-3 " +
         (isLarge
           ? "font-display text-2xl sm:text-3xl tracking-tight text-foreground"
           : "font-sans text-base sm:text-lg text-foreground")

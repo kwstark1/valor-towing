@@ -1,5 +1,4 @@
 import { RuleLabel } from "@/components/rule-label"
-import { FitButton } from "@/components/button"
 import { SampleReport } from "@/components/sample-report"
 
 const services = [
@@ -54,20 +53,6 @@ export function TheWorkSection() {
           </li>
         ))}
       </ol>
-
-      <figure className="mt-20 sm:mt-24 border-t border-border pt-14 sm:pt-16 text-center">
-        <blockquote className="space-y-3">
-          <p className="text-balance font-display text-3xl sm:text-5xl font-semibold leading-tight tracking-tight text-foreground">
-            Most agencies sell hours. We sell systems.
-          </p>
-          <p className="font-display text-xl sm:text-3xl italic text-muted-foreground">
-            That&rsquo;s the deal.
-          </p>
-        </blockquote>
-        <div className="mt-10 sm:mt-12">
-          <FitButton />
-        </div>
-      </figure>
     </section>
   )
 }
