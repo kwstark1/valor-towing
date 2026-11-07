@@ -174,7 +174,7 @@ export function RoiCalculator() {
 
       <section aria-label="Your estimate" className="lg:rounded lg:border lg:border-border lg:bg-card lg:px-6 lg:py-4">
         {lead ? (
-          <Results inputs={d} period={period} onPeriod={setPeriod} lead={lead} />
+          <Results inputs={d} dealSize={inputs.dealSize} period={period} onPeriod={setPeriod} lead={lead} />
         ) : (
           <Gate inputs={inputs} onUnlock={setLead} />
         )}
@@ -300,11 +300,14 @@ function Gate({ inputs, onUnlock }: { inputs: RoiInputs; onUnlock: (lead: Lead) 
 
 function Results({
   inputs: d,
+  dealSize,
   period,
   onPeriod,
   lead,
 }: {
   inputs: RoiInputs
+  // Live value, not the deferred copy in `d`, so a deal size typed just before clicking "Book a call" isn't lost.
+  dealSize: number
   period: Period
   onPeriod: (p: Period) => void
   lead: Lead
@@ -335,7 +338,7 @@ function Results({
   function book() {
     track("calendly_click", { location: "calculator_results" })
     // A button rather than a link, so analytics outbound-click tracking never records the prefilled name and email.
-    window.open(calendlyUrl(CALENDLY_URL, lead, d.dealSize), "_blank", "noopener")
+    window.open(calendlyUrl(CALENDLY_URL, lead, dealSize), "_blank", "noopener")
   }
 
   return (
