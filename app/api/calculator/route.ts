@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server"
 import { Resend } from "resend"
 import { z } from "zod"
-import { DEFAULTS, calculate, clampInputs } from "@/lib/roi"
+import { DEFAULTS, calculate, clampInputs, type RoiInputs } from "@/lib/roi"
+import { beehiivConfigured, subscribeToMemo } from "@/lib/beehiiv"
+import { BEEHIIV_CUSTOM_FIELDS } from "@/site.config"
 
 const schema = z.object({
   name: z.string().trim().min(1, "Please enter your name").max(100),
@@ -27,59 +29,33 @@ const FROM_ADDRESS = process.env.CONTACT_FROM_ADDRESS || "Stark & Barker <onboar
 
 const money = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 })
 
-async function subscribeToMemo(name: string, email: string, dealSize: number) {
-  const apiKey = process.env.BEEHIIV_API_KEY
-  const publicationId = process.env.BEEHIIV_PUBLICATION_ID
-  if (!apiKey || !publicationId) {
-    // TODO(Ken): set BEEHIIV_API_KEY and BEEHIIV_PUBLICATION_ID on Vercel (Preview + Production), then redeploy.
-    console.warn("Calculator lead not sent to Beehiiv: BEEHIIV_API_KEY / BEEHIIV_PUBLICATION_ID not set")
+async function notifyKen(name: string, email: string, inputs: RoiInputs) {
+  if (!process.env.RESEND_API_KEY) return false
+  try {
+    const r = calculate(inputs)
+    const result = await new Resend(process.env.RESEND_API_KEY).emails.send({
+      from: FROM_ADDRESS,
+      to: TO_ADDRESS,
+      replyTo: email,
+      subject: `Calculator lead: ${name}`,
+      text: [
+        `${name} <${email}> unlocked their estimate on the calculator.`,
+        ``,
+        `Deal size: ${money.format(inputs.dealSize)}`,
+        `Bundles: ${inputs.bundles}`,
+        `Rates: engaged ${inputs.engagementRate}%, qualified ${inputs.qualifiedRate}%, meetings ${inputs.meetingRate}%, show ${inputs.showRate}%, close ${inputs.closeRate}%`,
+        ``,
+        `Their monthly estimate: ${r.attended} attended meetings, ${r.deals} deals, ${money.format(r.revenue)} revenue against ${money.format(r.totalCost)} cost.`,
+        ``,
+        `Sent from starkandbarker.com/calculator`,
+      ].join("\n"),
+    })
+    if (result.error) console.error("Calculator lead email failed", result.error)
+    return !result.error
+  } catch (err) {
+    console.error("Calculator lead email error", err)
     return false
   }
-  const res = await fetch(`https://api.beehiiv.com/v2/publications/${publicationId}/subscriptions`, {
-    method: "POST",
-    headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
-    body: JSON.stringify({
-      email,
-      reactivate_existing: false,
-      send_welcome_email: true,
-      double_opt_override: "not_set",
-      utm_source: "starkandbarker.com",
-      utm_medium: "calculator",
-      referring_site: "https://starkandbarker.com/calculator",
-      // Beehiiv drops custom fields that don't exist in the publication rather than failing.
-      custom_fields: [
-        { name: "Name", value: name },
-        { name: "Deal Size", value: dealSize },
-      ],
-    }),
-  })
-  if (!res.ok) console.error("Beehiiv subscription failed", res.status, await res.text().catch(() => ""))
-  return res.ok
-}
-
-async function notifyKen(name: string, email: string, inputs: ReturnType<typeof clampInputs>) {
-  if (!process.env.RESEND_API_KEY) return false
-  const r = calculate(inputs)
-  const resend = new Resend(process.env.RESEND_API_KEY)
-  const result = await resend.emails.send({
-    from: FROM_ADDRESS,
-    to: TO_ADDRESS,
-    replyTo: email,
-    subject: `Calculator lead: ${name}`,
-    text: [
-      `${name} <${email}> unlocked their estimate on the calculator.`,
-      ``,
-      `Deal size: ${money.format(inputs.dealSize)}`,
-      `Bundles: ${inputs.bundles}`,
-      `Rates: engaged ${inputs.engagementRate}%, qualified ${inputs.qualifiedRate}%, meetings ${inputs.meetingRate}%, show ${inputs.showRate}%, close ${inputs.closeRate}%`,
-      ``,
-      `Their monthly estimate: ${r.attended} attended meetings, ${r.deals} deals, ${money.format(r.revenue)} revenue against ${money.format(r.totalCost)} cost.`,
-      ``,
-      `Sent from starkandbarker.com/calculator`,
-    ].join("\n"),
-  })
-  if (result.error) console.error("Calculator lead email failed", result.error)
-  return !result.error
 }
 
 export async function POST(request: Request) {
@@ -102,17 +78,19 @@ export async function POST(request: Request) {
   const { name, email } = parsed.data
   const inputs = clampInputs({ ...DEFAULTS, ...parsed.data.inputs })
 
-  // Each step fails independently so one outage never blocks the lead or the other step.
   const [subscribed, notified] = await Promise.all([
-    subscribeToMemo(name, email, inputs.dealSize).catch((err) => {
-      console.error("Beehiiv request error", err)
-      return false
-    }),
-    notifyKen(name, email, inputs).catch((err) => {
-      console.error("Calculator lead email error", err)
-      return false
-    }),
+    subscribeToMemo(email, "calculator", [
+      { name: BEEHIIV_CUSTOM_FIELDS.name, value: name },
+      { name: BEEHIIV_CUSTOM_FIELDS.dealSize, value: inputs.dealSize },
+    ]),
+    notifyKen(name, email, inputs),
   ])
+
+  // Results only unlock once the lead is saved somewhere. A local build with neither service set up still works.
+  const nothingConfigured = !beehiivConfigured() && !process.env.RESEND_API_KEY
+  if (!subscribed && !notified && !nothingConfigured) {
+    return NextResponse.json({ error: "Something went wrong. Please try again." }, { status: 502 })
+  }
 
   return NextResponse.json({ ok: true, subscribed, notified })
 }

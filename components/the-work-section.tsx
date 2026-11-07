@@ -1,4 +1,6 @@
 import { RuleLabel } from "@/components/rule-label"
+import { FitButton } from "@/components/button"
+import { SampleReport } from "@/components/sample-report"
 
 const services = [
   {
@@ -20,7 +22,7 @@ const services = [
 
 export function TheWorkSection() {
   return (
-    <section className="mx-auto max-w-3xl px-6 sm:px-8 py-20 sm:py-24">
+    <section id="the-work" className="mx-auto max-w-3xl px-6 sm:px-8 py-20 sm:py-24 scroll-mt-32">
       <RuleLabel>The Work</RuleLabel>
 
       <p className="mt-14 sm:mt-20 font-display text-2xl sm:text-3xl leading-snug tracking-tight text-foreground">
@@ -43,21 +45,29 @@ export function TheWorkSection() {
               {s.name}
             </h3>
             <span aria-hidden="true" />
-            <p className="text-base sm:text-lg leading-[1.7] text-foreground/85">
-              {s.body}
-            </p>
+            <div>
+              <p className="text-base sm:text-lg leading-[1.7] text-foreground/85">
+                {s.body}
+              </p>
+              {s.number === "01" ? <SampleReport /> : null}
+            </div>
           </li>
         ))}
       </ol>
 
-      <div className="mt-20 sm:mt-24 border-t border-border pt-10 sm:pt-12 space-y-3">
-        <p className="font-display text-2xl sm:text-3xl leading-snug tracking-tight text-foreground">
-          Most agencies sell hours. We sell systems.
-        </p>
-        <p className="font-display text-xl sm:text-2xl italic text-muted-foreground">
-          That&rsquo;s the deal.
-        </p>
-      </div>
+      <figure className="mt-20 sm:mt-24 border-t border-border pt-14 sm:pt-16 text-center">
+        <blockquote className="space-y-3">
+          <p className="text-balance font-display text-3xl sm:text-5xl font-semibold leading-tight tracking-tight text-foreground">
+            Most agencies sell hours. We sell systems.
+          </p>
+          <p className="font-display text-xl sm:text-3xl italic text-muted-foreground">
+            That&rsquo;s the deal.
+          </p>
+        </blockquote>
+        <div className="mt-10 sm:mt-12">
+          <FitButton />
+        </div>
+      </figure>
     </section>
   )
 }

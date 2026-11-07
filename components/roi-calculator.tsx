@@ -1,7 +1,9 @@
 "use client"
 
-import { useDeferredValue, useEffect, useState, type ChangeEvent, type FormEvent, type KeyboardEvent } from "react"
-import { sendGAEvent } from "@next/third-parties/google"
+import { useDeferredValue, useEffect, useRef, useState, type ChangeEvent, type FormEvent, type KeyboardEvent } from "react"
+import { buttonClasses } from "@/components/button"
+import { track } from "@/lib/analytics"
+import { CALENDLY_URL } from "@/site.config"
 import {
   BUNDLE_PRICE,
   CONTACTS_PER_BUNDLE,
@@ -25,7 +27,6 @@ const pct = (n: number) => `${n}%`
 const plural = (n: number, one: string, many: string) => (n === 1 ? one : many)
 
 const DEAL_CHIPS = [10_000, 25_000, 50_000, 100_000]
-const CALENDLY_URL = process.env.NEXT_PUBLIC_CALENDLY_URL
 const PRIVACY_URL = "https://www.privacypolicies.com/live/5f9bc43b-bef0-4dd1-8eaa-eaedd4a9b9a6"
 
 type Lead = { name: string; email: string }
@@ -36,6 +37,7 @@ export function RoiCalculator() {
   const [ready, setReady] = useState(false)
   const [copied, setCopied] = useState(false)
   const [lead, setLead] = useState<Lead | null>(null)
+  const started = useRef(false)
 
   useEffect(() => {
     function applyHash() {
@@ -62,6 +64,10 @@ export function RoiCalculator() {
   const d = useDeferredValue(inputs)
 
   function set<K extends keyof RoiInputs>(key: K, value: RoiInputs[K]) {
+    if (!started.current) {
+      started.current = true
+      track("calculator_start")
+    }
     setInputs((prev) => clampInputs({ ...prev, [key]: value }))
   }
 
@@ -188,26 +194,26 @@ function Gate({ inputs, onUnlock }: { inputs: RoiInputs; onUnlock: (lead: Lead) 
     e.preventDefault()
     setSubmitting(true)
     setError(null)
+    // Results only show after the server confirms the lead was saved.
     try {
       const res = await fetch("/api/calculator", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, company, inputs }),
       })
-      if (res.status === 400) {
+      if (!res.ok) {
         const data = await res.json().catch(() => ({}))
-        setError(data?.error || "Please check your name and email.")
+        setError(data?.error || "Something went wrong. Please try again.")
         setSubmitting(false)
         return
       }
     } catch {
-      // A network or server failure still shows the estimate; the lead isn't worth losing the visitor over.
+      setError("Something went wrong. Please check your connection and try again.")
+      setSubmitting(false)
+      return
     }
-    try {
-      sendGAEvent("event", "generate_lead", { method: "calculator" })
-    } catch {
-      // Analytics failures never block the estimate.
-    }
+    track("calculator_email_submit")
+    track("generate_lead", { method: "calculator" })
     onUnlock({ name: name.trim(), email: email.trim() })
   }
 
@@ -264,11 +270,7 @@ function Gate({ inputs, onUnlock }: { inputs: RoiInputs; onUnlock: (lead: Lead) 
           className="absolute left-[-9999px] h-0 w-0 opacity-0"
         />
         <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-          <button
-            type="submit"
-            disabled={submitting}
-            className="rounded bg-accent px-5 py-2.5 text-sm text-accent-foreground transition-opacity hover:opacity-90 disabled:opacity-50"
-          >
+          <button type="submit" disabled={submitting} className={buttonClasses("md")}>
             {submitting ? "One moment…" : "Show my estimate"}
           </button>
           {error ? (
@@ -278,7 +280,7 @@ function Gate({ inputs, onUnlock }: { inputs: RoiInputs; onUnlock: (lead: Lead) 
           ) : null}
         </div>
         <p className="text-[0.7rem] leading-snug text-muted-foreground">
-          You’ll also get The Stark &amp; Barker Memo by email. Every issue has a one-click unsubscribe.{" "}
+          You&rsquo;ll also get The Stark &amp; Barker Memo. Unsubscribe anytime.{" "}
           <a href={PRIVACY_URL} target="_blank" rel="noopener noreferrer" className={linkButton}>
             Privacy policy
           </a>
@@ -325,12 +327,12 @@ function Results({
   const wideHeadline = revenueText.length > 9
   const revenueSize = revenueText.length <= 11 ? "text-5xl" : revenueText.length <= 14 ? "text-4xl" : "text-3xl"
 
+  useEffect(() => {
+    track("calculator_results_view")
+  }, [])
+
   function book() {
-    if (!CALENDLY_URL) {
-      // TODO(Ken): set NEXT_PUBLIC_CALENDLY_URL on Vercel; until then booking falls back to the contact form.
-      window.location.href = "/#contact"
-      return
-    }
+    track("calendly_click", { location: "calculator_results" })
     // A button rather than a link, so analytics outbound-click tracking never records the prefilled name and email.
     window.open(calendlyUrl(CALENDLY_URL, lead, d.dealSize), "_blank", "noopener")
   }
@@ -441,11 +443,7 @@ function Results({
           converts differently. Month one usually runs lower while new domains warm up.
         </p>
         <div className="shrink-0 text-right">
-          <button
-            type="button"
-            onClick={book}
-            className="rounded bg-accent px-5 py-2 text-sm text-accent-foreground transition-opacity hover:opacity-90"
-          >
+          <button type="button" onClick={book} className={buttonClasses("sm")}>
             Book a call
           </button>
           <p className="mt-1 text-[0.7rem] text-muted-foreground">

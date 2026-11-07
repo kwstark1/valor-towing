@@ -1,5 +1,5 @@
-import Link from "next/link"
 import { RuleLabel } from "@/components/rule-label"
+import { FitButton } from "@/components/button"
 
 export function AboutSection() {
   return (
@@ -35,6 +35,9 @@ export function AboutSection() {
             </span>
           </p>
 
+          {/* TODO(Ken): approve wording. */}
+          <p>Founded by a U.S. Navy veteran.</p>
+
           <p className="text-foreground">A name like that carries a thesis.</p>
         </div>
 
@@ -63,20 +66,7 @@ export function AboutSection() {
       </div>
 
       <div className="mt-16 sm:mt-20">
-        <Link
-          href="/calculator"
-          className="group inline-flex items-baseline gap-3 font-sans text-base sm:text-lg text-foreground"
-        >
-          <span
-            aria-hidden="true"
-            className="text-accent transition-transform group-hover:translate-x-0.5"
-          >
-            →
-          </span>
-          <span className="border-b border-border group-hover:border-foreground transition-colors">
-            See if you&rsquo;re a fit
-          </span>
-        </Link>
+        <FitButton />
       </div>
     </section>
   )

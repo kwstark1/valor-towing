@@ -63,6 +63,7 @@ Body theme-color meta was #ebe4d3 (see app/layout.tsx viewport export).
   --muted-foreground: #8FA0B4;
   --accent: #D28B4A;
   --accent-foreground: #0E1B2E;
+  --accent-hover: #BD7D43;
   --destructive: #D28B4A;
   --destructive-foreground: #0E1B2E;
   --border: #24384F;
@@ -102,6 +103,7 @@ Body theme-color meta was #ebe4d3 (see app/layout.tsx viewport export).
   --muted-foreground: #8FA0B4;
   --accent: #D28B4A;
   --accent-foreground: #0E1B2E;
+  --accent-hover: #BD7D43;
   --destructive: #D28B4A;
   --destructive-foreground: #0E1B2E;
   --border: #24384F;
@@ -140,6 +142,7 @@ Body theme-color meta was #ebe4d3 (see app/layout.tsx viewport export).
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --color-accent-hover: var(--accent-hover);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
@@ -170,6 +173,11 @@ Body theme-color meta was #ebe4d3 (see app/layout.tsx viewport export).
   }
   html {
     scroll-behavior: smooth;
+  }
+  :where(a, button, summary):focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
   }
   body {
     @apply bg-background text-foreground;
