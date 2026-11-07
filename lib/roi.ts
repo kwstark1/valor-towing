@@ -143,12 +143,11 @@ export function decodeHash(hash: string): { inputs: RoiInputs; period: Period } 
   return { inputs: clampInputs(inputs), period: params.get("p") === "q" ? "quarterly" : "monthly" }
 }
 
-// Calendly prefills name and email natively; a1 fills the event's first custom question, which is the
-// open "Please share anything that will help prepare for our meeting." box, so the deal size carries its own label.
-export function calendlyUrl(base: string, lead: { name: string; email: string }, dealSize: number) {
+// Calendly prefills name and email natively. Nothing else is sent, so the event's notes question
+// ("Please share anything that will help prepare for our meeting.") stays empty for the prospect (Ken, 2026-11-07).
+export function calendlyUrl(base: string, lead: { name: string; email: string }) {
   const url = new URL(base)
   url.searchParams.set("name", lead.name)
   url.searchParams.set("email", lead.email)
-  url.searchParams.set("a1", `Typical deal size: $${dealSize.toLocaleString("en-US")}`)
   return url.toString()
 }

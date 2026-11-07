@@ -7,8 +7,7 @@ export const CALCULATOR_PATH = "/calculator"
 export const CALCULATOR_LIVE = true
 
 export const CALENDLY_URL = "https://calendly.com/pipelines-starkandbarker/new-meeting"
-// The calculator pre-fills the event's first custom question (a1) with "Typical deal size: $X".
-// Ken keeps only the "Please share anything that will help prepare for our meeting." question (2026-11-07).
+// "Book a call" pre-fills only name and email; the event's notes question stays empty for the prospect.
 
 // TODO(Ken): set BEEHIIV_API_KEY and BEEHIIV_PUBLICATION_ID in Vercel (Preview + Production), then redeploy.
 // Until they're set, Memo and calculator signups are emailed to the contact inbox instead.
